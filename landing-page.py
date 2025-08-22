@@ -126,3 +126,5 @@ st.markdown("""
 
 # --- Footer ---
 st.markdown("<div class='footer'>&copy; 2025 MemoGenie. All rights reserved.</div>", unsafe_allow_html=True)
+
+
