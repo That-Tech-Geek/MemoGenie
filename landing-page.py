@@ -2,7 +2,7 @@ import streamlit as st
 
 # --- Page Config ---
 st.set_page_config(
-    page_title="MemoGenie",
+    page_title="MemoGenie - Automate Investment Memos",
     page_icon="📑",
     layout="wide",
 )
@@ -16,7 +16,7 @@ st.markdown("""
             color: #E0E0E0;
             line-height: 1.6;
         }
-        h2, h3 {
+        h1, h2, h3 {
             font-weight: 700;
         }
         .hero-text {
@@ -27,11 +27,11 @@ st.markdown("""
             margin-bottom: 1rem;
         }
         .hero-sub {
-            font-size: 1.25rem;
+            font-size: 1.35rem;
             color: #9CA3AF;
             text-align: center;
-            max-width: 700px;
-            margin: auto;
+            max-width: 750px;
+            margin: 1rem auto 2rem auto;
         }
         .btn {
             display: inline-block;
@@ -112,7 +112,7 @@ st.write("---")
 st.markdown("<div class='hero-text'>Automate Due Diligence,<br> Accelerate Decisions.</div>", unsafe_allow_html=True)
 st.markdown("<p class='hero-sub'>MemoGenie is your AI-powered co-founder, turning raw startup data into actionable, VC-grade investment memos in hours, not weeks.</p>", unsafe_allow_html=True)
 st.markdown(
-    """<p style='text-align:center; margin-top:2.5rem;'>
+    """<p style='text-align:center; margin-top:2rem;'>
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog" class="btn" target="_blank">Start Building Memos</a>
     </p>""", unsafe_allow_html=True
 )
@@ -127,7 +127,7 @@ with col1:
     st.markdown("""
         <div class="card">
             <h3>Automated Memo Generation</h3>
-            <p>Convert unstructured data from pitch decks and financials into a structured, comprehensive investment memo.</p>
+            <p>Turn pitch decks and financials into structured, investor-ready memos — no manual work required.</p>
         </div>
     """, unsafe_allow_html=True)
 
@@ -135,7 +135,7 @@ with col2:
     st.markdown("""
         <div class="card">
             <h3>OCR & Metadata Parsing</h3>
-            <p>Seamlessly process non-downloadable decks and PDFs, extracting key insights with proprietary OCR technology.</p>
+            <p>Extract key insights even from locked or image-based PDFs with built-in OCR and parsing.</p>
         </div>
     """, unsafe_allow_html=True)
 
@@ -143,9 +143,43 @@ with col3:
     st.markdown("""
         <div class="card">
             <h3>Proprietary Valuation Model</h3>
-            <p>Get a data-backed valuation using comparative multiple modeling, integrated directly into the memo.</p>
+            <p>See data-backed valuations instantly, using comparative multiples integrated into every memo.</p>
         </div>
     """, unsafe_allow_html=True)
+
+
+# --- Deep Research Section ---
+st.write("## 🔍 VC Deep Research – Beyond the Memo")
+
+st.markdown("""
+    <div class="card" style="background: linear-gradient(135deg, #1F2937, #111827); padding:2.5rem; text-align:center; border: 1px solid #374151;">
+        <h2 style="color:white; margin-bottom:1rem;">From Memos to Market Mastery</h2>
+        <p style="color:#D1D5DB; font-size:1.15rem; max-width:800px; margin:auto;">
+            MemoGenie Deep Research isn’t just about writing memos — it’s about giving you <b>Gemini-level intelligence</b>.
+            Go beyond pitch decks and surface numbers. Uncover hidden competitors, stress-test financial models,
+            track market shifts, and map out risks before anyone else sees them.
+        </p>
+        <div style="display:flex; flex-wrap:wrap; justify-content:center; margin-top:2rem; gap:1.5rem;">
+            <div style="flex:1; min-width:250px; background-color:#111827; padding:1.5rem; border-radius:1rem; border:1px solid #2D2D2D;">
+                <h3 style="color:white;">📊 Smarter Valuations</h3>
+                <p style="color:#9CA3AF;">Test thousands of financial scenarios in hours, not weeks.</p>
+            </div>
+            <div style="flex:1; min-width:250px; background-color:#111827; padding:1.5rem; border-radius:1rem; border:1px solid #2D2D2D;">
+                <h3 style="color:white;">🕵️ Competitive Edge</h3>
+                <p style="color:#9CA3AF;">Spot hidden rivals, funding moves, and hiring shifts before the market does.</p>
+            </div>
+            <div style="flex:1; min-width:250px; background-color:#111827; padding:1.5rem; border-radius:1rem; border:1px solid #2D2D2D;">
+                <h3 style="color:white;">⚖️ Risk Radar</h3>
+                <p style="color:#9CA3AF;">From regulatory red flags to market timing risks — see them quantified and mapped.</p>
+            </div>
+        </div>
+        <p style="margin-top:2rem; color:#E9D5FF; font-size:1.05rem;">
+            What used to take analysts <b>weeks</b> is now done in <b>hours</b> — with sharper insights and zero bias.
+        </p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog" 
+           class="btn" target="_blank" style="margin-top:1.5rem;">Unlock Deep Research</a>
+    </div>
+""", unsafe_allow_html=True)
 
 
 # --- CTA Section ---
@@ -154,36 +188,6 @@ st.markdown("""
         <h2>Ready to 10x Your Due Diligence?</h2>
         <p>Stop wasting time on manual work. Get the intel you need, faster than ever.</p>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog" class="btn btn-light" target="_blank">Get Access</a>
-    </div>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-    <div class="card" style="background: linear-gradient(135deg, #1F2937, #111827); padding:2.5rem; text-align:center; border: 1px solid #374151;">
-        <h2 style="color:white; margin-bottom:1rem;">From Memos to Market Mastery</h2>
-        <p style="color:#D1D5DB; font-size:1.1rem; max-width:800px; margin:auto;">
-            MemoGenie Deep Research isn’t just about writing memos — it’s about giving you <b>Gemini-level intelligence</b>.
-            Go beyond pitch decks and surface numbers. Uncover hidden competitors, stress-test financial models,
-            track market shifts, and map out risks before anyone else sees them.
-        </p>
-        <div style="display:flex; flex-wrap:wrap; justify-content:center; margin-top:2rem; gap:1.5rem;">
-            <div style="flex:1; min-width:250px; background-color:#111827; padding:1.5rem; border-radius:1rem; border:1px solid #2D2D2D;">
-                <h3 style="color:white;">📊 Smarter Valuations</h3>
-                <p style="color:#9CA3AF;">Beyond multiples. Run Monte Carlo simulations and scenario planning to see the full picture.</p>
-            </div>
-            <div style="flex:1; min-width:250px; background-color:#111827; padding:1.5rem; border-radius:1rem; border:1px solid #2D2D2D;">
-                <h3 style="color:white;">🕵️ Competitive Edge</h3>
-                <p style="color:#9CA3AF;">Uncover hidden rivals, track hiring trends, monitor funding rounds — spot moves before they matter.</p>
-            </div>
-            <div style="flex:1; min-width:250px; background-color:#111827; padding:1.5rem; border-radius:1rem; border:1px solid #2D2D2D;">
-                <h3 style="color:white;">⚖️ Risk Radar</h3>
-                <p style="color:#9CA3AF;">From regulatory red flags to market timing risks — get a quantified risk map for every bet.</p>
-            </div>
-        </div>
-        <p style="margin-top:2rem; color:#E9D5FF; font-size:1.05rem;">
-            What used to take analysts <b>weeks</b> is now done in <b>hours</b> — with sharper insights and zero bias.
-        </p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog" 
-           class="btn" target="_blank" style="margin-top:1.5rem;">Unlock Deep Research</a>
     </div>
 """, unsafe_allow_html=True)
 
