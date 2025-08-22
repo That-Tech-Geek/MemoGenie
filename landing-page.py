@@ -157,9 +157,6 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# --- Deep Research Section ---
-st.write("## 🔍 VC Deep Research – Beyond the Memo")
-
 st.markdown("""
     <div class="card" style="background: linear-gradient(135deg, #1F2937, #111827); padding:2.5rem; text-align:center; border: 1px solid #374151;">
         <h2 style="color:white; margin-bottom:1rem;">From Memos to Market Mastery</h2>
