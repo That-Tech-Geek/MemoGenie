@@ -14,12 +14,17 @@ st.markdown("""
             font-family: 'Inter', sans-serif;
             background-color: #121212;
             color: #E0E0E0;
+            line-height: 1.6;
+        }
+        h2, h3 {
+            font-weight: 700;
         }
         .hero-text {
             font-size: 3rem;
             font-weight: 800;
             color: white;
             text-align: center;
+            margin-bottom: 1rem;
         }
         .hero-sub {
             font-size: 1.25rem;
@@ -29,15 +34,22 @@ st.markdown("""
             margin: auto;
         }
         .btn {
+            display: inline-block;
             background-color: #7C3AED;
-            color: white;
+            color: white !important;
             font-weight: bold;
-            padding: 0.8rem 2rem;
+            padding: 0.9rem 2.2rem;
             border-radius: 9999px;
             text-decoration: none;
+            transition: all 0.3s ease;
         }
         .btn:hover {
             background-color: #6D28D9;
+            transform: translateY(-2px);
+        }
+        .btn-light {
+            background-color: white;
+            color: #7C3AED !important;
         }
         .card {
             background-color: #1F2937;
@@ -45,15 +57,38 @@ st.markdown("""
             border-radius: 1rem;
             border: 1px solid #374151;
             color: #D1D5DB;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: #7C3AED;
         }
         .card h3 {
             color: white;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .cta-section {
+            background-color: #7C3AED;
+            padding: 3rem 2rem;
+            border-radius: 1.5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        .cta-section h2 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+        .cta-section p {
+            color: #E9D5FF;
+            margin-bottom: 2rem;
         }
         .footer {
             color: #9CA3AF;
             text-align: center;
             padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid #2D2D2D;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -62,10 +97,10 @@ st.markdown("""
 # --- Navbar ---
 col1, col2 = st.columns([1, 1])
 with col1:
-    st.markdown("<h2 style='color:white;'>📑 MemoGenie</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color:white; margin:0;'>📑 MemoGenie</h2>", unsafe_allow_html=True)
 with col2:
     st.markdown(
-        """<p style='text-align:right;'>
+        """<p style='text-align:right; margin:0;'>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog" class="btn" target="_blank">Get Started</a>
         </p>""", unsafe_allow_html=True
     )
@@ -77,7 +112,7 @@ st.write("---")
 st.markdown("<div class='hero-text'>Automate Due Diligence,<br> Accelerate Decisions.</div>", unsafe_allow_html=True)
 st.markdown("<p class='hero-sub'>MemoGenie is your AI-powered co-founder, turning raw startup data into actionable, VC-grade investment memos in hours, not weeks.</p>", unsafe_allow_html=True)
 st.markdown(
-    """<p style='text-align:center; margin-top:2rem;'>
+    """<p style='text-align:center; margin-top:2.5rem;'>
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog" class="btn" target="_blank">Start Building Memos</a>
     </p>""", unsafe_allow_html=True
 )
@@ -114,17 +149,14 @@ with col3:
 
 
 # --- CTA Section ---
-st.write("## ")
 st.markdown("""
-    <div style="background-color:#7C3AED; padding:2rem; border-radius:1.5rem; text-align:center;">
-        <h2 style="color:white;">Ready to 10x Your Due Diligence?</h2>
-        <p style="color:#E9D5FF;">Stop wasting time on manual work. Get the intel you need, faster than ever.</p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog" class="btn" style="background:white; color:#7C3AED;" target="_blank">Get Access</a>
+    <div class="cta-section">
+        <h2>Ready to 10x Your Due Diligence?</h2>
+        <p>Stop wasting time on manual work. Get the intel you need, faster than ever.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog" class="btn btn-light" target="_blank">Get Access</a>
     </div>
 """, unsafe_allow_html=True)
 
 
 # --- Footer ---
 st.markdown("<div class='footer'>&copy; 2025 MemoGenie. All rights reserved.</div>", unsafe_allow_html=True)
-
-
