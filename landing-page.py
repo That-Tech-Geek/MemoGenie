@@ -32,6 +32,7 @@ st.markdown("""
             text-align: center;
             max-width: 750px;
             margin: 1rem auto 2rem auto;
+            display: block;
         }
         .btn {
             display: inline-block;
@@ -59,6 +60,10 @@ st.markdown("""
             color: #D1D5DB;
             transition: all 0.3s ease;
             height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
         }
         .card:hover {
             transform: translateY(-4px);
@@ -67,6 +72,17 @@ st.markdown("""
         .card h3 {
             color: white;
             margin-bottom: 0.75rem;
+        }
+        /* Fix for equal-height cards inside Streamlit columns */
+        .card-container {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        .card-container > div {
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
         }
         .cta-section {
             background-color: #7C3AED;
@@ -121,56 +137,59 @@ st.markdown(
 # --- Features Section ---
 st.write("## 🚀 The Engine Behind the Decisions")
 
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.markdown("""
+st.markdown("""
+<div class="card-container">
+    <div>
         <div class="card">
             <h3>Automated Memo Generation</h3>
             <p>Turn pitch decks and financials into structured, investor-ready memos — no manual work required.</p>
         </div>
-    """, unsafe_allow_html=True)
-
-with col2:
-    st.markdown("""
+    </div>
+    <div>
         <div class="card">
             <h3>OCR & Metadata Parsing</h3>
             <p>Extract key insights even from locked or image-based PDFs with built-in OCR and parsing.</p>
         </div>
-    """, unsafe_allow_html=True)
-
-with col3:
-    st.markdown("""
+    </div>
+    <div>
         <div class="card">
             <h3>Proprietary Valuation Model</h3>
             <p>See data-backed valuations instantly, using comparative multiples integrated into every memo.</p>
         </div>
-    """, unsafe_allow_html=True)
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 
 # --- Deep Research Section ---
 st.write("## 🔍 VC Deep Research – Beyond the Memo")
 
 st.markdown("""
-    <div class="card" style="background: linear-gradient(135deg, #1F2937, #111827); padding:2.5rem; text-align:center; border: 1px solid #374151;">
+    <div class="card" style="background: linear-gradient(135deg, #1F2937, #111827); padding:2.5rem; text-align:center; border: 1px solid #374151; max-width: 1000px; margin:auto;">
         <h2 style="color:white; margin-bottom:1rem;">From Memos to Market Mastery</h2>
         <p style="color:#D1D5DB; font-size:1.15rem; max-width:800px; margin:auto;">
             MemoGenie Deep Research isn’t just about writing memos — it’s about giving you <b>Gemini-level intelligence</b>.
             Go beyond pitch decks and surface numbers. Uncover hidden competitors, stress-test financial models,
             track market shifts, and map out risks before anyone else sees them.
         </p>
-        <div style="display:flex; flex-wrap:wrap; justify-content:center; margin-top:2rem; gap:1.5rem;">
-            <div style="flex:1; min-width:250px; background-color:#111827; padding:1.5rem; border-radius:1rem; border:1px solid #2D2D2D;">
-                <h3 style="color:white;">📊 Smarter Valuations</h3>
-                <p style="color:#9CA3AF;">Test thousands of financial scenarios in hours, not weeks.</p>
+        <div class="card-container" style="margin-top:2rem;">
+            <div>
+                <div class="card">
+                    <h3>📊 Smarter Valuations</h3>
+                    <p>Test thousands of financial scenarios in hours, not weeks.</p>
+                </div>
             </div>
-            <div style="flex:1; min-width:250px; background-color:#111827; padding:1.5rem; border-radius:1rem; border:1px solid #2D2D2D;">
-                <h3 style="color:white;">🕵️ Competitive Edge</h3>
-                <p style="color:#9CA3AF;">Spot hidden rivals, funding moves, and hiring shifts before the market does.</p>
+            <div>
+                <div class="card">
+                    <h3>🕵️ Competitive Edge</h3>
+                    <p>Spot hidden rivals, funding moves, and hiring shifts before the market does.</p>
+                </div>
             </div>
-            <div style="flex:1; min-width:250px; background-color:#111827; padding:1.5rem; border-radius:1rem; border:1px solid #2D2D2D;">
-                <h3 style="color:white;">⚖️ Risk Radar</h3>
-                <p style="color:#9CA3AF;">From regulatory red flags to market timing risks — see them quantified and mapped.</p>
+            <div>
+                <div class="card">
+                    <h3>⚖️ Risk Radar</h3>
+                    <p>From regulatory red flags to market timing risks — see them quantified and mapped.</p>
+                </div>
             </div>
         </div>
         <p style="margin-top:2rem; color:#E9D5FF; font-size:1.05rem;">
