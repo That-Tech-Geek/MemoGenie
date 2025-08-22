@@ -2,7 +2,7 @@ import streamlit as st
 
 # --- Page Config ---
 st.set_page_config(
-    page_title="MemoGenie - Automate Investment Memos",
+    page_title="MemoGenie",
     page_icon="📑",
     layout="wide",
 )
