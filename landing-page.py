@@ -146,6 +146,15 @@ st.markdown("""
         .text-gold {
             color: var(--gold);
         }
+        
+        /* New section for memo generation UI */
+        .memo-section {
+            background-color: var(--card-black);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid #374151;
+            margin-top: 3rem;
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -157,7 +166,7 @@ with col1:
 with col2:
     st.markdown(
         """<p style='text-align:right; margin:0;'>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog" class="btn-gold" target="_blank">Get Started</a>
+        <a href="#memo-generator" class="btn-gold">Start Building Memos</a>
         </p>""", unsafe_allow_html=True
     )
 
@@ -170,7 +179,7 @@ st.markdown("<h1 class='hero-title text-4xl sm:text-5xl md:text-6xl tracking-tig
 st.markdown("<p class='hero-sub'>MemoGenie is your AI-powered co-founder, turning raw startup data into actionable, VC-grade investment memos in hours, not weeks.</p>", unsafe_allow_html=True)
 st.markdown(
     """<p style='text-align:center; margin-top:2rem;'>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog" class="btn-gold" target="_blank">Start Building Memos</a>
+    <a href="#memo-generator" class="btn-gold">Start Building Memos</a>
     </p>""", unsafe_allow_html=True
 )
 st.markdown("</div>", unsafe_allow_html=True)
@@ -243,12 +252,63 @@ st.markdown("""
         <p class="mt-8 text-gray-500 text-lg">
             What used to take analysts <b>weeks</b> is now done in <b>hours</b> — with sharper insights and zero bias.
         </p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog"
+        <a href="#memo-generator"
             class="btn-gold mt-6 inline-block"
             target="_blank">Unlock Deep Research</a>
     </div>
 </section>
 """, unsafe_allow_html=True)
+
+
+# --- Memo Generation Section (The new part) ---
+st.markdown("<a name='memo-generator'></a>", unsafe_allow_html=True)
+st.markdown("""
+    <div class="memo-section">
+        <h2 class="text-3xl font-bold text-center mb-6">Generate Your Investment Memo</h2>
+        <p class="text-lg text-center text-gray-400 mb-6">Upload your pitch deck or startup documents below. MemoGenie will handle the rest.</p>
+""", unsafe_allow_html=True)
+
+# File uploader
+uploaded_file = st.file_uploader(
+    "Upload a PDF or ZIP file",
+    type=['pdf', 'zip'],
+    help="Drag and drop your pitch deck or a zip file containing multiple documents."
+)
+
+# Generate button
+if uploaded_file is not None:
+    if st.button("Generate Memo", use_container_width=True):
+        with st.spinner('Analyzing documents and generating memo...'):
+            # --- START AI LOGIC HERE ---
+            #
+            # This is where you'd call your API to process the uploaded_file.
+            # Example:
+            #
+            # import requests
+            # response = requests.post("YOUR_API_ENDPOINT/analyze", files={"file": uploaded_file})
+            # if response.status_code == 200:
+            #     generated_memo = response.json().get('memo_content')
+            # else:
+            #     generated_memo = "Error: Failed to generate memo. Please try again."
+            #
+            # For now, we'll use a placeholder.
+            #
+            # st.session_state['generated_memo'] = generated_memo
+            st.session_state['generated_memo'] = "### Memo for [Startup Name]\n\n**1. Opportunity & Market:**\n[AI-generated summary of market size, problem, and opportunity.]\n\n**2. Product & Solution:**\n[AI-generated analysis of the product, technology, and competitive advantage.]\n\n**3. Team:**\n[AI-generated summary of key team members and their relevant experience.]\n\n**4. Financials:**\n[AI-generated key financial highlights, projections, and valuation.]\n\n**5. Risks & Red Flags:**\n[AI-generated summary of potential risks and red flags.]"
+            st.success('Memo generated successfully!')
+
+# Display memo
+if 'generated_memo' in st.session_state and st.session_state['generated_memo']:
+    st.markdown("---")
+    st.subheader("Generated Memo")
+    st.text_area(
+        "Your Memo",
+        value=st.session_state['generated_memo'],
+        height=500,
+        disabled=True
+    )
+
+st.markdown("</div>", unsafe_allow_html=True)
 
 
 # --- CTA Section ---
@@ -257,7 +317,7 @@ st.markdown("""
     <div class="cta-section">
         <h2>Ready to 10x Your Due Diligence?</h2>
         <p>Stop wasting time on manual work. Get the intel you need, faster than ever.</p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog" class="btn-black" target="_blank">Get Access</a>
+        <a href="#memo-generator" class="btn-black">Get Started</a>
     </div>
 """, unsafe_allow_html=True)
 st.markdown("</section>", unsafe_allow_html=True)
