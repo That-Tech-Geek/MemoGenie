@@ -1,128 +1,195 @@
 import streamlit as st
 
-# --- Page Config ---
+# Page config
 st.set_page_config(
-    page_title="MemoGenie - Automate Investment Memos",
-    page_icon="📑",
+    page_title="MemoGenie | The Enterprise Knowledge Engine",
+    page_icon="🧞",
     layout="wide",
 )
 
-# --- Custom CSS ---
+# Inject custom CSS + animations
 st.markdown("""
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #121212;
-            color: #E0E0E0;
-        }
-        .hero-text {
-            font-size: 3rem;
-            font-weight: 800;
-            color: white;
-            text-align: center;
-        }
-        .hero-sub {
-            font-size: 1.25rem;
-            color: #9CA3AF;
-            text-align: center;
-            max-width: 700px;
-            margin: auto;
-        }
-        .btn {
-            background-color: #7C3AED;
-            color: white;
-            font-weight: bold;
-            padding: 0.8rem 2rem;
-            border-radius: 9999px;
-            text-decoration: none;
-        }
-        .btn:hover {
-            background-color: #6D28D9;
-        }
-        .card {
-            background-color: #1F2937;
-            padding: 2rem;
-            border-radius: 1rem;
-            border: 1px solid #374151;
-            color: #D1D5DB;
-        }
-        .card h3 {
-            color: white;
-            margin-bottom: 0.5rem;
-        }
-        .footer {
-            color: #9CA3AF;
-            text-align: center;
-            padding: 2rem;
-        }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+    html, body, [class*="css"]  {
+        font-family: 'Inter', sans-serif;
+        background: #000;
+        color: #fff;
+    }
+
+    /* Glow Animations */
+    .glow {
+        color: #fff;
+        text-shadow: 0 0 10px #fff, 0 0 20px #999, 0 0 30px #666;
+    }
+    .cta-button {
+        display:inline-block;
+        background: white;
+        color: black;
+        padding: 1rem 2rem;
+        font-weight: 700;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease-in-out;
+    }
+    .cta-button:hover {
+        background: #e5e5e5;
+        transform: scale(1.05) translateY(-3px);
+    }
+
+    /* Flip Card Container */
+    .flip-card {
+      background-color: transparent;
+      width: 100%;
+      height: 260px;
+      perspective: 1000px;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 20px;
+      background: #181818;
+    }
+    .flip-card-back {
+      transform: rotateY(180deg);
+      background: #111;
+    }
+
+    /* Section headers */
+    .section h2 {
+        font-size: 2.5rem;
+        font-weight: 900;
+        margin-bottom: 10px;
+    }
+    .section p {
+        color: #a1a1a1;
+        max-width: 600px;
+        margin: auto;
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid #2a2a2a;
+        margin: 3rem 0;
+    }
     </style>
 """, unsafe_allow_html=True)
 
+# Google Form link
+form_url = "https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog"
 
-# --- Navbar ---
-col1, col2 = st.columns([1, 1])
-with col1:
-    st.markdown("<h2 style='color:white;'>📑 MemoGenie</h2>", unsafe_allow_html=True)
-with col2:
-    st.markdown(
-        """<p style='text-align:right;'>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog" class="btn" target="_blank">Get Started</a>
-        </p>""", unsafe_allow_html=True
-    )
+# HEADER
+st.markdown("<h1 class='glow' style='text-align:center;font-size:4rem;'>MemoGenie</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center;color:#a1a1a1;'>The Enterprise Knowledge Engine</p>", unsafe_allow_html=True)
 
-st.write("---")
+# HERO
+st.markdown(f"""
+<div style='text-align:center;padding:80px 20px;'>
+    <h1 style='font-size:3rem;font-weight:900;'>Unlock Your Institutional Memory.</h1>
+    <p style='max-width:650px;margin:20px auto;color:#a1a1a1;'>
+        Your company’s most valuable asset is its knowledge. MemoGenie transforms scattered Slack, Notion, and meeting data into a single source of truth.
+    </p>
+    <a href='{form_url}' target='_blank' class='cta-button'>Request Enterprise Demo →</a>
+</div>
+""", unsafe_allow_html=True)
 
+st.markdown("<hr>", unsafe_allow_html=True)
 
-# --- Hero Section ---
-st.markdown("<div class='hero-text'>Automate Due Diligence,<br> Accelerate Decisions.</div>", unsafe_allow_html=True)
-st.markdown("<p class='hero-sub'>MemoGenie is your AI-powered co-founder, turning raw startup data into actionable, VC-grade investment memos in hours, not weeks.</p>", unsafe_allow_html=True)
-st.markdown(
-    """<p style='text-align:center; margin-top:2rem;'>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog" class="btn" target="_blank">Start Building Memos</a>
-    </p>""", unsafe_allow_html=True
-)
-
-
-# --- Features Section ---
-st.write("## 🚀 The Engine Behind the Decisions")
+# FEATURE SECTIONS with Flip Cards
+st.markdown("""
+<div class='section' style='text-align:center;'>
+    <h2>The High Cost of Lost Knowledge</h2>
+    <p>Every day, your team wastes hours searching for info, duplicating work, and re-learning what’s already known.</p>
+</div>
+""", unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns(3)
-
 with col1:
     st.markdown("""
-        <div class="card">
-            <h3>Automated Memo Generation</h3>
-            <p>Convert unstructured data from pitch decks and financials into a structured, comprehensive investment memo.</p>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <h3>⏳ Slow Onboarding</h3>
+              <p>New hires take months to ramp.</p>
+            </div>
+            <div class="flip-card-back">
+              <p>They struggle piecing together endless docs and repetitive Q&A.</p>
+            </div>
+          </div>
         </div>
     """, unsafe_allow_html=True)
 
 with col2:
     st.markdown("""
-        <div class="card">
-            <h3>OCR & Metadata Parsing</h3>
-            <p>Seamlessly process non-downloadable decks and PDFs, extracting key insights with proprietary OCR technology.</p>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <h3>🔄 Redundant Work</h3>
+              <p>Projects get restarted.</p>
+            </div>
+            <div class="flip-card-back">
+              <p>Past work is buried, costing you time and money.</p>
+            </div>
+          </div>
         </div>
     """, unsafe_allow_html=True)
 
 with col3:
     st.markdown("""
-        <div class="card">
-            <h3>Proprietary Valuation Model</h3>
-            <p>Get a data-backed valuation using comparative multiple modeling, integrated directly into the memo.</p>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <h3>🚪 Knowledge Drain</h3>
+              <p>Employees leave, knowledge leaves.</p>
+            </div>
+            <div class="flip-card-back">
+              <p>Critical expertise evaporates, weakening the org.</p>
+            </div>
+          </div>
         </div>
     """, unsafe_allow_html=True)
 
+st.markdown("<hr>", unsafe_allow_html=True)
 
-# --- CTA Section ---
-st.write("## ")
+# FUTURISTIC SECTION
 st.markdown("""
-    <div style="background-color:#7C3AED; padding:2rem; border-radius:1.5rem; text-align:center;">
-        <h2 style="color:white;">Ready to 10x Your Due Diligence?</h2>
-        <p style="color:#E9D5FF;">Stop wasting time on manual work. Get the intel you need, faster than ever.</p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog" class="btn" style="background:white; color:#7C3AED;" target="_blank">Get Access</a>
-    </div>
+<div class='section' style='text-align:center;'>
+    <h2>The Intelligence Layer for Your Business</h2>
+    <p>MemoGenie connects your tools to create a searchable, intelligent knowledge base that works for you.</p>
+</div>
 """, unsafe_allow_html=True)
 
+col4, col5, col6 = st.columns(3)
+with col4:
+    st.info("🚀 **Onboard in Days, Not Months**\n\nAsk MemoGenie for instant project histories.")
+with col5:
+    st.info("💡 **Surface Insights, Not Just Docs**\n\nSynthesized summaries, not link dumps.")
+with col6:
+    st.info("🔒 **Enterprise-Grade Security**\n\nYour data stays yours. Period.")
 
-# --- Footer ---
-st.markdown("<div class='footer'>&copy; 2025 MemoGenie. All rights reserved.</div>", unsafe_allow_html=True)
+st.markdown("<hr>", unsafe_allow_html=True)
+
+# DEMO BUTTON AGAIN
+st.markdown(f"""
+<div style='text-align:center;margin:40px;'>
+    <a href='{form_url}' target='_blank' class='cta-button'>Request a Demo →</a>
+</div>
+""", unsafe_allow_html=True)
+
+# FOOTER
+st.markdown("<p style='text-align:center;color:#666;padding:30px;'>&copy; 2025 MemoGenie. The Single Source of Truth for Enterprise.</p>", unsafe_allow_html=True)
