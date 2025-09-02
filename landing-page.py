@@ -1,6 +1,36 @@
 import streamlit as st
 import time
 
+# --- MOCK DATA ---
+# This would be your actual backend/API call in a real app
+DEMO_RESPONSES = {
+    "What were the key learnings from the Q4 customer feedback on Project Atlas?": {
+        "answer": """
+        The key learning from Q4 feedback on <strong>Project Atlas</strong> was a strong dichotomy:
+        <ul>
+            <li>Users loved the new UI, praised for its speed and intuitiveness (praised by <strong>Alice</strong> in the product sync on Nov 12th).</li>
+            <li>However, the data export feature was a critical failure point for power users, representing a significant churn risk.</li>
+        </ul>
+        This export issue was first flagged by <strong>Bob</strong> from Sales after a call with a major client and is linked to the same API limitation that caused delays in the failed <strong>Project Titan</strong> last year.
+        """,
+        "recommendation": "Prioritize a fix for the export feature and form a task force to evaluate the core API dependency to avoid repeating past mistakes.",
+        "sources": ["[Project Atlas - Q4 Feedback.docx]", "[Nov 12 - Product Sync Transcript]", "[Client Call - Bob.mp3]"]
+    },
+    "Summarize the competitive landscape for our new 'Genie' feature.": {
+        "answer": """
+        The competitive landscape for 'Genie' is dominated by three players:
+        <ul>
+            <li><strong>Competitor A:</strong> Strong in the enterprise market but their product is known to be slow and bloated.</li>
+            <li><strong>Competitor B:</strong> A fast-moving startup that recently raised a Series B. Their feature set is limited but they have strong user love.</li>
+            <li><strong>Internal Project 'Phoenix':</strong> A now-defunct internal tool from two years ago that attempted a similar goal. The post-mortem (authored by <strong>Carol</strong>) cited a lack of data integration as the primary reason for failure.</li>
+        </ul>
+        MemoGenie's advantage is our ability to integrate deeply with existing tools, directly addressing the failure point of our own past attempts.
+        """,
+        "recommendation": "Focus marketing on the speed and seamless integration of MemoGenie compared to Competitor A, and highlight our broader feature set than Competitor B.",
+        "sources": ["[Market Analysis Q3.pptx]", "[Competitor B - Series B Press Release]", "[Project Phoenix Post-Mortem.pdf]"]
+    }
+}
+
 def main():
     # --- PAGE CONFIGURATION ---
     st.set_page_config(
@@ -34,13 +64,56 @@ def main():
         h1 {
             font-size: 4.5rem !important;
             letter-spacing: -2px !important;
+            line-height: 1.1 !important;
         }
 
         h2 {
-            font-size: 2.8rem !important;
+            font-size: 3rem !important;
+            letter-spacing: -1px !important;
         }
         
-        /* Main CTA Button */
+        /* --- Navigation Bar --- */
+        div[data-testid="stToolbar"] {
+            padding-right: 2rem;
+        }
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .nav-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .nav-links a {
+            color: #a1a1a1;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+        .nav-cta {
+            background-color: #ffffff;
+            color: #000000 !important;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        /* --- Main CTA Button --- */
         .stButton>a>button {
             background-color: #ffffff;
             color: #000000;
@@ -52,20 +125,29 @@ def main():
         }
         .stButton>a>button:hover {
             background-color: #e5e5e5;
-            color: #000000;
             transform: translateY(-2px);
-            border: none;
         }
 
-        /* Demo "Ask" Button */
-        div[data-testid*="stHorizontalBlock"] .stButton>button {
-             background-color: #181818;
+        /* --- Demo Section --- */
+        .stTextInput input {
+            background-color: #000000 !important;
+            border: 1px solid #2a2a2a;
+        }
+        .stButton>button { /* General button style */
              border: 1px solid #2a2a2a;
+             background-color: #181818;
         }
-         div[data-testid*="stHorizontalBlock"] .stButton>button:hover {
+         .stButton>button:hover {
              border-color: #ffffff;
+             color: #ffffff;
          }
-
+        .ai-response {
+            background-color: #181818;
+            border: 1px solid #2a2a2a;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+        }
 
         /* Feature Card Styles */
         .feature-card {
@@ -84,69 +166,73 @@ def main():
             font-size: 2.5rem;
             margin-bottom: 1rem;
         }
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.75rem;
-        }
-        .feature-card p {
-            color: #a1a1a1;
-        }
         
-        /* AI Response Box */
-        .ai-response {
-            background-color: #181818;
-            border: 1px solid #2a2a2a;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-top: 1rem;
-        }
-
         /* Center Align Content */
-        .center-text {
-            text-align: center;
-            max-width: 650px;
-            margin: 0 auto;
-        }
         .section-header {
              text-align: center;
-             max-width: 600px;
+             max-width: 700px;
              margin: 0 auto 4rem auto;
         }
         .section-header p {
             color: #a1a1a1;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
 
-        /* Remove top margin from Streamlit title */
-        div[data-testid="stVerticalBlock"] div[data-testid="stVerticalBlock"] div[data-testid="stVerticalBlock"] {
-            padding-top: 0rem;
+        /* Section dividers */
+        .section {
+            padding-top: 8rem;
+            padding-bottom: 8rem;
         }
-        
+        .section-divider {
+            border-bottom: 1px solid #2a2a2a;
+        }
+
     </style>
     """, unsafe_allow_html=True)
 
+    # --- CUSTOM NAVIGATION BAR ---
+    st.markdown("""
+        <div class="nav-container">
+            <a href="#top" class="nav-logo">MemoGenie</a>
+            <div class="nav-links">
+                <a href="#how-it-works">How It Works</a>
+                <a href="#demo">Demo</a>
+                <a href="#the-engine">The Engine</a>
+                <a href="#request-a-demo" class="nav-cta">Request a Demo</a>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+
     # --- HERO SECTION ---
     with st.container():
-        st.markdown("<div class='center-text'><h1>Unlock Your Institutional Memory.</h1></div>", unsafe_allow_html=True)
-        st.markdown("<div class='center-text'><p style='font-size: 1.25rem; color: #a1a1a1;'>Your company's most valuable asset is its knowledge. But it's trapped in Slack, Notion, and meeting transcripts. MemoGenie is the AI engine that turns your scattered data into a single source of truth.</p></div>", unsafe_allow_html=True)
+        st.markdown("<div id='top' style='padding-top: 8rem'></div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'><h1>Unlock Your Institutional Memory.</h1><p>Your company's most valuable asset is its knowledge. But it's trapped in Slack, Notion, and meeting transcripts. MemoGenie is the AI engine that turns your scattered data into a single source of truth.</p></div>", unsafe_allow_html=True)
         
         _, col2, _ = st.columns([3.5, 2, 3.5])
         with col2:
             st.link_button("Request Enterprise Demo →", "#request-a-demo", use_container_width=True)
-        
-        st.write(" ")
-        st.write(" ")
-
-
-    # --- PROBLEM SECTION ---
+    
+    # --- SOCIAL PROOF ---
     with st.container():
-        st.markdown("<div id='the-problem' class='section-header'><h2>The High Cost of Lost Knowledge</h2><p>Every day, your team wastes hours searching for information, duplicating work, and re-learning what's already known.</p></div>", unsafe_allow_html=True)
+        st.write(" ")
+        st.write(" ")
+        st.markdown("<p style='text-align: center; color: #a1a1a1;'>TRUSTED BY THE WORLD'S MOST INNOVATIVE COMPANIES</p>", unsafe_allow_html=True)
+        
+        # In a real app, these would be logos
+        st.markdown("<h3 style='text-align: center; font-weight: 600; color: #555555; letter-spacing: 0.5rem;'>LOGO LOGO LOGO LOGO</h3>", unsafe_allow_html=True)
+        st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
+
+    # --- HOW IT WORKS ---
+    with st.container():
+        st.markdown("<div id='how-it-works' class='section'></div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'><h2>Connect. Reason. Act.</h2><p>In three simple steps, MemoGenie transforms your disparate data into a proactive, intelligent advantage.</p></div>", unsafe_allow_html=True)
         
         cols = st.columns(3, gap="large")
         cards_data = [
-            {"icon": "⏳", "title": "Slow Onboarding", "text": "New hires take months to become productive, piecing together context from endless documents and asking repetitive questions."},
-            {"icon": "🔄", "title": "Redundant Work", "text": "Decisions are re-litigated and projects are re-started because past work is impossible to find, costing you time and money."},
-            {"icon": "🚪", "title": "Knowledge Drain", "text": "When an employee leaves, their expertise walks out the door. Critical knowledge is lost forever, weakening your entire organization."}
+            {"icon": "🔌", "title": "1. Connect Your Tools", "text": "With one click, securely link MemoGenie to your existing knowledge sources: Slack, Notion, Google Drive, and more. Our system begins indexing immediately."},
+            {"icon": "🕸️", "title": "2. Build The Knowledge Graph", "text": "Our engine maps the hidden relationships between people, projects, and decisions, creating a dynamic, real-time model of your organization's brain."},
+            {"icon": "💡", "title": "3. Get Proactive Insights", "text": "Don't just search, ask. MemoGenie delivers synthesized answers, surfaces hidden risks, and provides the strategic foresight you need to win."}
         ]
         for i, card in enumerate(cards_data):
             with cols[i]:
@@ -157,47 +243,59 @@ def main():
                     <p>{card['text']}</p>
                 </div>
                 """, unsafe_allow_html=True)
-        st.write(" ")
-        st.write(" ")
-
+        st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
 
     # --- INTERACTIVE DEMO ---
     with st.container():
-        st.markdown("<div id='demo' class='section-header'><h2>See The Cognitive Engine in Action</h2><p>Ask a question. Our engine won't just find a document—it will connect the dots across your entire organization to give you a strategic answer.</p></div>", unsafe_allow_html=True)
+        st.markdown("<div id='demo' class='section'></div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'><h2>See The Cognitive Engine in Action</h2><p>Ask a question. Our engine won't just find a document—it will connect the dots across your entire organization to give you a strategic answer.</p></div>", unsafe_allow_html=True)
 
-        c1, c2 = st.columns([4, 1])
-        with c1:
-            user_question = st.text_input("Ask about a project, a decision, or a customer...", placeholder="e.g., What were the key learnings from the Q4 customer feedback on Project Atlas?", label_visibility="collapsed")
-        with c2:
-            ask_button = st.button("Ask MemoGenie", use_container_width=True)
+        if 'user_question' not in st.session_state:
+            st.session_state.user_question = ""
 
-        if ask_button and user_question:
+        def set_question(question):
+            st.session_state.user_question = question
+        
+        example_questions = list(DEMO_RESPONSES.keys())
+        cols = st.columns(len(example_questions))
+        for i, question in enumerate(example_questions):
+            with cols[i]:
+                st.button(question, on_click=set_question, args=(question,), use_container_width=True)
+
+        user_question_input = st.text_input("Ask about a project, a decision, or a customer...", value=st.session_state.user_question, key="text_input", label_visibility="collapsed")
+        
+        if user_question_input:
             with st.spinner("Analyzing connections across documents, transcripts, and messages..."):
-                time.sleep(2) # Simulate work
+                time.sleep(1.5)
             
-            st.markdown(
-                """
-                <div class="ai-response">
-                    <h4>Synthesized Answer:</h4>
-                    <p>The key learning from Q4 feedback on <strong>Project Atlas</strong> was that while users loved the new UI (praised by <strong>Alice</strong> in the product sync on Nov 12th), the data export feature was a critical failure point. This issue was first flagged by <strong>Bob</strong> from the Sales team after a call with a major client (see transcript) and is linked to the same API limitation that caused delays in the failed <strong>Project Titan</strong> last year.</p>
-                    <p><strong>Recommendation:</strong> Prioritize a fix for the export feature and review the API dependency to avoid repeating past mistakes.</p>
-                    <small>SOURCES: [Project Atlas - Q4 Feedback.docx], [Nov 12 - Product Sync Transcript], [Client Call - Bob.mp3]</small>
-                </div>
-                """, unsafe_allow_html=True
+            response = DEMO_RESPONSES.get(user_question_input, 
+                {
+                    "answer": "This is a great question. While I don't have a pre-canned answer, a live demo would show how MemoGenie connects the dots to provide a real-time, synthesized response from your data.",
+                    "recommendation": "Request a personalized demo to see this in action on your own organization's data.",
+                    "sources": ["[Internal Memo Q1.docx]", "[Project Planning.vsdx]"]
+                }
             )
-        st.write(" ")
-        st.write(" ")
+            
+            st.markdown(f"""
+            <div class="ai-response">
+                <h4>Synthesized Answer:</h4>
+                <p>{response['answer']}</p>
+                <p><strong>Recommendation:</strong> {response['recommendation']}</p>
+                <small>SOURCES: {' '.join(response['sources'])}</small>
+            </div>
+            """, unsafe_allow_html=True)
+        st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
 
-
-    # --- COGNITIVE ENGINE SECTION ---
+    # --- THE MEMOGENIE ADVANTAGE ---
     with st.container():
-        st.markdown("<div id='the-engine' class='section-header'><h2>From Retrieval to Reasoning.</h2><p>Retrieval-Augmented Generation (RAG) is a commodity. It finds documents. Our Cognitive Engine connects disparate data points to generate novel, strategic insights your team would otherwise miss.</p></div>", unsafe_allow_html=True)
+        st.markdown("<div id='the-engine' class='section'></div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'><h2>From Retrieval to Reasoning.</h2><p>Retrieval-Augmented Generation (RAG) is a commodity. It finds documents. Our Cognitive Engine connects disparate data points to generate novel, strategic insights your team would otherwise miss.</p></div>", unsafe_allow_html=True)
 
         cols = st.columns(3, gap="large")
         cards_data = [
-            {"icon": "🕸️", "title": "The Dynamic Knowledge Graph", "text": "We don't just index your data; we build a real-time map of it. It understands the relationships between people, projects, decisions, and outcomes."},
-            {"icon": "🕵️", "title": "Proactive AI Agents", "text": "Our autonomous agents monitor the knowledge graph 24/7 to surface unseen opportunities, flag emerging risks, and identify critical patterns before a human could."},
-            {"icon": "🔮", "title": "Causal & Predictive Insights", "text": "Go beyond what happened to why it happened. The engine helps you understand the second-order effects of decisions, enabling you to lead with foresight."}
+            {"icon": "🚀", "title": "90% Faster Onboarding", "text": "Give new hires a co-pilot that can answer any question about your company's history, projects, and processes instantly."},
+            {"icon": "🔄", "title": "Reduce Redundant Work by 15%", "text": "Our proactive agents surface existing work and past decisions before your team starts a new project from scratch."},
+            {"icon": "🔮", "title": "Lead with Foresight", "text": "Go beyond what happened to why it happened. Understand the second-order effects of decisions and mitigate risks before they emerge."}
         ]
         for i, card in enumerate(cards_data):
             with cols[i]:
@@ -208,12 +306,12 @@ def main():
                     <p>{card['text']}</p>
                 </div>
                 """, unsafe_allow_html=True)
-        st.write(" ")
-        st.write(" ")
+        st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
     
     # --- GOOGLE FORM EMBED ---
     with st.container():
-        st.markdown("<div id='request-a-demo' class='section-header'><h2>Get Started with MemoGenie</h2><p>Request a personalized demo and discover how our Cognitive Engine can unlock the institutional memory of your enterprise.</p></div>", unsafe_allow_html=True)
+        st.markdown("<div id='request-a-demo' class='section'></div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'><h2>Get Started with MemoGenie</h2><p>Request a personalized demo and discover how our Cognitive Engine can unlock the institutional memory of your enterprise.</p></div>", unsafe_allow_html=True)
         
         google_form_url = "https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?embedded=true"
         
@@ -222,12 +320,9 @@ def main():
             height=820
         )
 
-
     # --- FOOTER ---
     st.markdown("---", unsafe_allow_html=True)
-    st.markdown("<div style='text-align: center; color: #a1a1a1;'><p>© 2025 MemoGenie. The Single Source of Truth for Enterprise.</p></div>", unsafe_allow_html=True)
-
+    st.markdown("<div style='text-align: center; color: #a1a1a1; padding: 2rem 0;'><p>© 2025 MemoGenie. The Single Source of Truth for Enterprise.</p></div>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
-
