@@ -1,4 +1,5 @@
 import streamlit as st
+import time
 
 def main():
     # --- PAGE CONFIGURATION ---
@@ -9,7 +10,6 @@ def main():
     )
 
     # --- INJECT CUSTOM CSS ---
-    # This is crucial for replicating the black and white, modern theme.
     st.markdown("""
     <style>
         /* General Styles */
@@ -40,8 +40,8 @@ def main():
             font-size: 2.8rem !important;
         }
         
-        /* Button Styles */
-        .stButton>button {
+        /* Main CTA Button */
+        .stButton>a>button {
             background-color: #ffffff;
             color: #000000;
             border: none;
@@ -50,12 +50,22 @@ def main():
             border-radius: 8px;
             transition: all 0.2s ease-in-out;
         }
-        .stButton>button:hover {
+        .stButton>a>button:hover {
             background-color: #e5e5e5;
             color: #000000;
             transform: translateY(-2px);
             border: none;
         }
+
+        /* Demo "Ask" Button */
+        div[data-testid*="stHorizontalBlock"] .stButton>button {
+             background-color: #181818;
+             border: 1px solid #2a2a2a;
+        }
+         div[data-testid*="stHorizontalBlock"] .stButton>button:hover {
+             border-color: #ffffff;
+         }
+
 
         /* Feature Card Styles */
         .feature-card {
@@ -64,6 +74,11 @@ def main():
             border-radius: 12px;
             border: 1px solid #2a2a2a;
             height: 100%;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #a1a1a1;
         }
         .feature-icon {
             font-size: 2.5rem;
@@ -76,6 +91,15 @@ def main():
         .feature-card p {
             color: #a1a1a1;
         }
+        
+        /* AI Response Box */
+        .ai-response {
+            background-color: #181818;
+            border: 1px solid #2a2a2a;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+        }
 
         /* Center Align Content */
         .center-text {
@@ -85,45 +109,38 @@ def main():
         }
         .section-header {
              text-align: center;
-             max-width: 500px;
+             max-width: 600px;
              margin: 0 auto 4rem auto;
         }
         .section-header p {
             color: #a1a1a1;
             font-size: 1.1rem;
         }
+
+        /* Remove top margin from Streamlit title */
+        div[data-testid="stVerticalBlock"] div[data-testid="stVerticalBlock"] div[data-testid="stVerticalBlock"] {
+            padding-top: 0rem;
+        }
         
     </style>
     """, unsafe_allow_html=True)
-
-    # --- HEADER ---
-    # While a sticky header is complex, we can create a clean top bar.
-    c1, c2 = st.columns([2, 5])
-    with c1:
-        st.markdown("<h2 style='font-size: 1.8rem; font-weight: 900;'>MemoGenie</h2>", unsafe_allow_html=True)
-    with c2:
-        # This is a placeholder for nav links if needed in the future
-        pass
-    st.markdown("---", unsafe_allow_html=True)
-
 
     # --- HERO SECTION ---
     with st.container():
         st.markdown("<div class='center-text'><h1>Unlock Your Institutional Memory.</h1></div>", unsafe_allow_html=True)
         st.markdown("<div class='center-text'><p style='font-size: 1.25rem; color: #a1a1a1;'>Your company's most valuable asset is its knowledge. But it's trapped in Slack, Notion, and meeting transcripts. MemoGenie is the AI engine that turns your scattered data into a single source of truth.</p></div>", unsafe_allow_html=True)
         
-        # Center the button using columns
-        _, col2, _ = st.columns([3, 2, 3])
+        _, col2, _ = st.columns([3.5, 2, 3.5])
         with col2:
-            st.button("Request Enterprise Demo →")
+            st.link_button("Request Enterprise Demo →", "#request-a-demo", use_container_width=True)
         
-        st.write(" ") # Spacer
-        st.write(" ") # Spacer
+        st.write(" ")
+        st.write(" ")
 
 
     # --- PROBLEM SECTION ---
     with st.container():
-        st.markdown("<div class='section-header'><h2>The High Cost of Lost Knowledge</h2><p>Every day, your team wastes hours searching for information, duplicating work, and re-learning what's already known.</p></div>", unsafe_allow_html=True)
+        st.markdown("<div id='the-problem' class='section-header'><h2>The High Cost of Lost Knowledge</h2><p>Every day, your team wastes hours searching for information, duplicating work, and re-learning what's already known.</p></div>", unsafe_allow_html=True)
         
         cols = st.columns(3, gap="large")
         cards_data = [
@@ -140,36 +157,41 @@ def main():
                     <p>{card['text']}</p>
                 </div>
                 """, unsafe_allow_html=True)
-        st.write(" ") # Spacer
-        st.write(" ") # Spacer
+        st.write(" ")
+        st.write(" ")
 
 
-    # --- SOLUTION SECTION ---
+    # --- INTERACTIVE DEMO ---
     with st.container():
-        st.markdown("<div class='section-header'><h2>The Intelligence Layer for Your Business</h2><p>MemoGenie securely connects to your existing tools to create a searchable, intelligent knowledge base that works for you.</p></div>", unsafe_allow_html=True)
+        st.markdown("<div id='demo' class='section-header'><h2>See The Cognitive Engine in Action</h2><p>Ask a question. Our engine won't just find a document—it will connect the dots across your entire organization to give you a strategic answer.</p></div>", unsafe_allow_html=True)
 
-        cols = st.columns(3, gap="large")
-        cards_data = [
-            {"icon": "🚀", "title": "Onboard Hires in Days, Not Months", "text": "Let new team members ask MemoGenie: \"What's the history of Project X?\" and get an instant, AI-generated brief with all key decisions and documents."},
-            {"icon": "💡", "title": "Surface Insights, Not Just Documents", "text": "Ask \"What are our key learnings from the Q3 customer feedback?\" and get a synthesized summary, not a list of 100 links."},
-            {"icon": "🔒", "title": "Secure, Private, and Integrated", "text": "Connects to your tools with enterprise-grade security. Your data is your own, and is never used for training external models."}
-        ]
-        for i, card in enumerate(cards_data):
-            with cols[i]:
-                st.markdown(f"""
-                <div class="feature-card">
-                    <div class="feature-icon">{card['icon']}</div>
-                    <h3>{card['title']}</h3>
-                    <p>{card['text']}</p>
+        c1, c2 = st.columns([4, 1])
+        with c1:
+            user_question = st.text_input("Ask about a project, a decision, or a customer...", placeholder="e.g., What were the key learnings from the Q4 customer feedback on Project Atlas?", label_visibility="collapsed")
+        with c2:
+            ask_button = st.button("Ask MemoGenie", use_container_width=True)
+
+        if ask_button and user_question:
+            with st.spinner("Analyzing connections across documents, transcripts, and messages..."):
+                time.sleep(2) # Simulate work
+            
+            st.markdown(
+                """
+                <div class="ai-response">
+                    <h4>Synthesized Answer:</h4>
+                    <p>The key learning from Q4 feedback on <strong>Project Atlas</strong> was that while users loved the new UI (praised by <strong>Alice</strong> in the product sync on Nov 12th), the data export feature was a critical failure point. This issue was first flagged by <strong>Bob</strong> from the Sales team after a call with a major client (see transcript) and is linked to the same API limitation that caused delays in the failed <strong>Project Titan</strong> last year.</p>
+                    <p><strong>Recommendation:</strong> Prioritize a fix for the export feature and review the API dependency to avoid repeating past mistakes.</p>
+                    <small>SOURCES: [Project Atlas - Q4 Feedback.docx], [Nov 12 - Product Sync Transcript], [Client Call - Bob.mp3]</small>
                 </div>
-                """, unsafe_allow_html=True)
-        st.write(" ") # Spacer
-        st.write(" ") # Spacer
+                """, unsafe_allow_html=True
+            )
+        st.write(" ")
+        st.write(" ")
 
 
     # --- COGNITIVE ENGINE SECTION ---
     with st.container():
-        st.markdown("<div class='section-header'><h2>From Retrieval to Reasoning.</h2><p>Retrieval-Augmented Generation (RAG) is a commodity. It finds documents. Our Cognitive Engine connects disparate data points to generate novel, strategic insights your team would otherwise miss.</p></div>", unsafe_allow_html=True)
+        st.markdown("<div id='the-engine' class='section-header'><h2>From Retrieval to Reasoning.</h2><p>Retrieval-Augmented Generation (RAG) is a commodity. It finds documents. Our Cognitive Engine connects disparate data points to generate novel, strategic insights your team would otherwise miss.</p></div>", unsafe_allow_html=True)
 
         cols = st.columns(3, gap="large")
         cards_data = [
@@ -186,9 +208,20 @@ def main():
                     <p>{card['text']}</p>
                 </div>
                 """, unsafe_allow_html=True)
-        st.write(" ") # Spacer
-        st.write(" ") # Spacer
+        st.write(" ")
+        st.write(" ")
     
+    # --- GOOGLE FORM EMBED ---
+    with st.container():
+        st.markdown("<div id='request-a-demo' class='section-header'><h2>Get Started with MemoGenie</h2><p>Request a personalized demo and discover how our Cognitive Engine can unlock the institutional memory of your enterprise.</p></div>", unsafe_allow_html=True)
+        
+        google_form_url = "https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?embedded=true"
+        
+        st.components.v1.html(
+            f'<iframe src="{google_form_url}" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>',
+            height=820
+        )
+
 
     # --- FOOTER ---
     st.markdown("---", unsafe_allow_html=True)
@@ -197,3 +230,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
