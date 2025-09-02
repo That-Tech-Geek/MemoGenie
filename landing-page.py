@@ -1,228 +1,351 @@
 import streamlit as st
 
-# -------------------------------
-# PAGE CONFIG
-# -------------------------------
+# Set page config
 st.set_page_config(
     page_title="MemoGenie | The Enterprise Knowledge Engine",
-    page_icon="🧞",
-    layout="wide",
+    layout="wide"
 )
 
-# -------------------------------
-# CUSTOM CSS
-# -------------------------------
-st.markdown("""
-    <style>
-    /* Import Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Orbitron:wght@700;900&family=Playfair+Display:wght@700&display=swap');
+# Inject full HTML + CSS directly (no changes made)
+st.markdown(
+    """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MemoGenie | The Enterprise Knowledge Engine</title>
+        
+        <!-- Google Fonts: Inter -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+        
+        <style>
+            /* --- Full CSS from original HTML --- */
+            :root {
+                --background: #000000;
+                --text-primary: #ffffff;
+                --text-secondary: #a1a1a1;
+                --surface: #181818;
+                --primary: #ffffff; 
+                --primary-hover: #e5e5e5;
+                --border-color: #2a2a2a;
+            }
 
-    html, body, [class*="css"] {
-        background: #000;
-        color: #fff;
-        font-family: 'Inter', sans-serif;
-    }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
 
-    /* Headlines use Orbitron */
-    h1, h2 {
-        font-family: 'Orbitron', sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-    }
+            html {
+                scroll-behavior: smooth;
+            }
 
-    /* Sub-headlines use Playfair for contrast */
-    h3 {
-        font-family: 'Playfair Display', serif;
-        font-weight: 700;
-    }
+            body {
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                background-color: var(--background);
+                color: var(--text-primary);
+                line-height: 1.6;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
 
-    /* Glow Animations */
-    .glow {
-        color: #fff;
-        text-shadow: 0 0 12px #0ff, 0 0 24px #0ff, 0 0 36px #09f;
-    }
+            .container {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 0 24px;
+            }
 
-    /* CTA button */
-    .cta-button {
-        display:inline-block;
-        background: linear-gradient(90deg, #0ff, #09f);
-        color: black;
-        padding: 1rem 2.5rem;
-        font-weight: 700;
-        border-radius: 8px;
-        text-decoration: none;
-        transition: all 0.3s ease-in-out;
-        box-shadow: 0 0 15px rgba(0,255,255,0.4);
-    }
-    .cta-button:hover {
-        transform: scale(1.07) translateY(-3px);
-        box-shadow: 0 0 25px rgba(0,255,255,0.7);
-    }
+            h1, h2, h3 {
+                font-weight: 700;
+                line-height: 1.2;
+            }
 
-    /* Flip Cards */
-    .flip-card {
-      background-color: transparent;
-      width: 100%;
-      height: 300px;
-      perspective: 1000px;
-    }
-    .flip-card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      transition: transform 0.8s;
-      transform-style: preserve-3d;
-    }
-    .flip-card:hover .flip-card-inner {
-      transform: rotateY(180deg);
-    }
-    .flip-card-front, .flip-card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border: 1px solid #2a2a2a;
-      border-radius: 12px;
-      padding: 24px;
-      background: #111;
-    }
-    .flip-card-back {
-      transform: rotateY(180deg);
-      background: #181818;
-    }
+            .header {
+                padding: 20px 0;
+                border-bottom: 1px solid var(--border-color);
+                position: sticky;
+                top: 0;
+                background-color: rgba(0, 0, 0, 0.8);
+                backdrop-filter: blur(10px);
+                z-index: 10;
+            }
 
-    /* Section headers */
-    .section h2 {
-        font-size: 2.8rem;
-        font-weight: 900;
-        margin-bottom: 15px;
-    }
-    .section p {
-        color: #a1a1a1;
-        max-width: 700px;
-        margin: auto;
-        font-size: 1.15rem;
-    }
+            .navbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
 
-    hr {
-        border: none;
-        border-top: 1px solid #2a2a2a;
-        margin: 3rem 0;
-    }
-    </style>
-""", unsafe_allow_html=True)
+            .logo {
+                font-size: 1.8rem;
+                font-weight: 900;
+                color: var(--text-primary);
+                text-decoration: none;
+            }
 
-# Google Form link
-form_url = "https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?usp=dialog"
+            .nav-links a {
+                color: var(--text-secondary);
+                text-decoration: none;
+                margin-left: 24px;
+                transition: color 0.3s ease;
+                font-weight: 600;
+            }
 
-# -------------------------------
-# HERO
-# -------------------------------
-st.markdown("<h1 class='glow' style='text-align:center;font-size:4rem;'>MemoGenie</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align:center;color:#a1a1a1;font-size:1.3rem;'>The Enterprise Knowledge Engine</p>", unsafe_allow_html=True)
+            .nav-links a:hover {
+                color: var(--text-primary);
+            }
 
-st.markdown(f"""
-<div style='text-align:center;padding:80px 20px;'>
-    <h2 style='font-size:3rem;font-weight:900;'>Unlock Your Institutional Memory.</h2>
-    <p style='max-width:750px;margin:20px auto;color:#a1a1a1;'>
-        Right now, your company’s knowledge is scattered across Slack, Notion, email threads, and meeting transcripts. 
-        MemoGenie doesn’t just retrieve it — it organizes, synthesizes, and evolves it into the <b>single most valuable asset you own</b>.
-    </p>
-    <a href='{form_url}' target='_blank' class='cta-button'>Request Enterprise Demo →</a>
-</div>
-""", unsafe_allow_html=True)
+            .nav-cta {
+                background-color: var(--primary);
+                color: var(--background);
+                font-weight: 700;
+                padding: 8px 16px;
+                border-radius: 6px;
+            }
 
-st.markdown("<hr>", unsafe_allow_html=True)
+            .nav-cta:hover {
+                background-color: var(--primary-hover);
+                color: var(--background) !important;
+            }
 
-# -------------------------------
-# FEATURES SECTION 1
-# -------------------------------
-st.markdown("""
-<div class='section' style='text-align:center;'>
-    <h2>The Hidden Costs of Lost Knowledge</h2>
-    <p>Every day, your org bleeds money and momentum. Employees reinvent the wheel, key insights disappear into Slack black holes, and institutional memory evaporates with every exit interview.</p>
-</div>
-""", unsafe_allow_html=True)
+            .hero {
+                text-align: center;
+                padding: 120px 0;
+            }
 
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.markdown("""
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <h3>⏳ Slow Onboarding</h3>
-              <p>Months wasted ramping new hires.</p>
+            .hero h1 {
+                font-size: 4.5rem;
+                font-weight: 900;
+                letter-spacing: -2px;
+                margin-bottom: 20px;
+                color: var(--text-primary);
+            }
+
+            .hero p {
+                font-size: 1.25rem;
+                color: var(--text-secondary);
+                max-width: 650px;
+                margin: 0 auto 40px;
+            }
+
+            .cta-button {
+                display: inline-block;
+                background-color: var(--primary);
+                color: var(--background);
+                padding: 16px 32px;
+                font-size: 1.1rem;
+                font-weight: 700;
+                text-decoration: none;
+                border-radius: 8px;
+                transition: background-color 0.3s ease, transform 0.2s ease;
+            }
+
+            .cta-button:hover {
+                background-color: var(--primary-hover);
+                transform: translateY(-3px);
+            }
+
+            .features {
+                padding: 80px 0;
+                border-top: 1px solid var(--border-color);
+            }
+
+            .section-header {
+                text-align: center;
+                margin-bottom: 60px;
+            }
+
+            .section-header h2 {
+                font-size: 2.8rem;
+                font-weight: 900;
+            }
+
+            .section-header p {
+                font-size: 1.1rem;
+                color: var(--text-secondary);
+                max-width: 500px;
+                margin: 10px auto 0;
+            }
+
+            .features-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 24px;
+            }
+
+            .feature-card {
+                background-color: var(--surface);
+                padding: 32px;
+                border-radius: 12px;
+                border: 1px solid var(--border-color);
+                transition: transform 0.3s ease, border-color 0.3s ease;
+            }
+
+            .feature-card:hover {
+                transform: translateY(-5px);
+                border-color: var(--text-secondary);
+            }
+
+            .feature-card h3 {
+                font-size: 1.5rem;
+                margin-bottom: 12px;
+            }
+
+            .feature-card p {
+                color: var(--text-secondary);
+            }
+
+            .feature-icon {
+                font-size: 2.5rem;
+                margin-bottom: 16px;
+            }
+
+            .footer {
+                text-align: center;
+                padding: 40px 0;
+                margin-top: 60px;
+                border-top: 1px solid var(--border-color);
+                color: var(--text-secondary);
+            }
+
+            @media (max-width: 768px) {
+                .hero h1 {
+                    font-size: 3rem;
+                }
+                .hero p {
+                    font-size: 1.1rem;
+                }
+                .nav-links a {
+                    display: none;
+                }
+                .nav-links .nav-cta {
+                    display: block;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <nav class="navbar">
+                    <a href="#" class="logo">MemoGenie</a>
+                    <div class="nav-links">
+                        <a href="#solutions">Solutions</a>
+                        <a href="#">Customers</a>
+                        <a href="#">Pricing</a>
+                        <a href="#" class="nav-cta">Request a Demo</a>
+                    </div>
+                </nav>
             </div>
-            <div class="flip-card-back">
-              <p>Instead of spending 90 days chasing docs and context, new teammates should be producing in week one.</p>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="container">
+                    <h1>Unlock Your Institutional Memory.</h1>
+                    <p>
+                        Your company's most valuable asset is its knowledge. But it's trapped in Slack, Notion, and meeting transcripts. MemoGenie is the AI engine that turns your scattered data into a single source of truth.
+                    </p>
+                    <a href="#" class="cta-button">Request Enterprise Demo &rarr;</a>
+                </div>
+            </section>
+
+            <!-- Problem Section -->
+            <section id="solutions" class="features">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>The High Cost of Lost Knowledge</h2>
+                        <p>Every day, your team wastes hours searching for information, duplicating work, and re-learning what's already known.</p>
+                    </div>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">⏳</div>
+                            <h3>Slow Onboarding</h3>
+                            <p>New hires take months to become productive, piecing together context from endless documents and asking repetitive questions.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🔄</div>
+                            <h3>Redundant Work</h3>
+                            <p>Decisions are re-litigated and projects are re-started because past work is impossible to find, costing you time and money.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🚪</div>
+                            <h3>Knowledge Drain</h3>
+                            <p>When an employee leaves, their expertise walks out the door. Critical knowledge is lost forever, weakening your entire organization.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Solution Section -->
+            <section id="features" class="features">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>The Intelligence Layer for Your Business</h2>
+                        <p>MemoGenie securely connects to your existing tools to create a searchable, intelligent knowledge base that works for you.</p>
+                    </div>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🚀</div>
+                            <h3>Onboard Hires in Days, Not Months</h3>
+                            <p>Let new team members ask MemoGenie: "What's the history of Project X?" and get an instant, AI-generated brief with all key decisions and documents.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">💡</div>
+                            <h3>Surface Insights, Not Just Documents</h3>
+                            <p>Ask "What are our key learnings from the Q3 customer feedback?" and get a synthesized summary, not a list of 100 links.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🔒</div>
+                            <h3>Secure, Private, and Integrated</h3>
+                            <p>Connects to your tools with enterprise-grade security. Your data is your own, and is never used for training external models.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cognitive Engine Section -->
+            <section class="features">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>From Retrieval to Reasoning.</h2>
+                        <p>Retrieval-Augmented Generation (RAG) is a commodity. It finds documents. Our Cognitive Engine connects disparate data points to generate novel, strategic insights your team would otherwise miss.</p>
+                    </div>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🕸️</div>
+                            <h3>The Dynamic Knowledge Graph</h3>
+                            <p>We don't just index your data; we build a real-time map of it. It understands the relationships between people, projects, decisions, and outcomes.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🕵️</div>
+                            <h3>Proactive AI Agents</h3>
+                            <p>Our autonomous agents monitor the knowledge graph 24/7 to surface unseen opportunities, flag emerging risks, and identify critical patterns before a human could.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🔮</div>
+                            <h3>Causal & Predictive Insights</h3>
+                            <p>Go beyond what happened to why it happened. The engine helps you understand the second-order effects of decisions, enabling you to lead with foresight.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2025 MemoGenie. The Single Source of Truth for Enterprise.</p>
             </div>
-          </div>
-        </div>
-    """, unsafe_allow_html=True)
-
-with col2:
-    st.markdown("""
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <h3>🔄 Redundant Work</h3>
-              <p>Projects constantly re-litigated.</p>
-            </div>
-            <div class="flip-card-back">
-              <p>Without a living knowledge base, history repeats itself. Decisions get revisited, decks get rebuilt, and execution stalls.</p>
-            </div>
-          </div>
-        </div>
-    """, unsafe_allow_html=True)
-
-with col3:
-    st.markdown("""
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <h3>🚪 Knowledge Drain</h3>
-              <p>Expertise walks out the door.</p>
-            </div>
-            <div class="flip-card-back">
-              <p>When an employee leaves, their context, insights, and mistakes go with them — weakening your org’s long-term resilience.</p>
-            </div>
-          </div>
-        </div>
-    """, unsafe_allow_html=True)
-
-st.markdown("<hr>", unsafe_allow_html=True)
-
-# -------------------------------
-# FEATURES SECTION 2
-# -------------------------------
-st.markdown("""
-<div class='section' style='text-align:center;'>
-    <h2>The Intelligence Layer For Your Business</h2>
-    <p>MemoGenie doesn’t just <i>store</i> data. It understands it. A searchable, AI-powered knowledge graph surfaces insights before you even think to ask.</p>
-</div>
-""", unsafe_allow_html=True)
-
-col4, col5, col6 = st.columns(3)
-with col4:
-    st.success("🚀 **Onboard in Days, Not Months**\n\nNew hires can query MemoGenie like a senior teammate: *“What’s the history of Project X?”* and get a full strategic brief instantly.")
-with col5:
-    st.success("💡 **Surface Insights, Not Just Docs**\n\nAsk *“What did we learn from Q3 churn?”* and get synthesized answers — not an avalanche of links.")
-with col6:
-    st.success("🔒 **Enterprise-Grade Security**\n\nYour data never leaves your control. Zero data leakage, zero model training on your IP.")
-
-st.markdown("<hr>", unsafe_allow_html=True)
-
-# -------------------------------
-# CALL TO ACTION AGAIN
-# -------------------------------
-st.markdown(f"""
-<div style='text-align:center;margin:60px;'>
-    <a href='{form_url}' target='_blank' class='cta-button'>Book a Private Demo →</a>
-</div>
-""", unsafe_allow_html=True)
-
-# -------------------------------
-# FOOTER
-# -------------------------------
-st.markdown("<p style='text-align:center;color:#666;padding:30px;'>&copy; 2025 MemoGenie. The Single Source of Truth for Enterprise.</p>", unsafe_allow_html=True)
+        </footer>
+    </body>
+    </html>
+    """,
+    unsafe_allow_html=True
+)
