@@ -194,14 +194,14 @@ def main():
         .cadence-container .engagement-card .status {
             font-weight: 700;
         }
-        .cadence-container .engagement-card .status-at-risk { color: #ff4b4b; }
-        .cadence-container .engagement-card .status-on-track { color: #3dd56d; }
-        .cadence-container .engagement-card .status-awaiting { color: #f0b429; }
+        .cadence-container .engagement-card .status-at-risk { color: #d90429; }
+        .cadence-container .engagement-card .status-on-track { color: #008000; }
+        .cadence-container .engagement-card .status-awaiting { color: #ffb703; }
         
         .cadence-container .button-row {
             display: flex;
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         .cadence-container .cadence-button {
@@ -383,3 +383,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
