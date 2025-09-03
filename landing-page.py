@@ -96,14 +96,14 @@ def main():
             text-decoration: none;
         }
         .nav-links a {
-            color: #a1a1a1;
+            color: #a1a1a1; /* REVERTED */
             text-decoration: none;
             margin-left: 2rem;
             font-weight: 600;
             transition: color 0.3s;
         }
         .nav-links a:hover {
-            color: #ffffff;
+            color: #ffffff; /* REVERTED hover state */
         }
         .nav-cta {
             background-color: #ffffff;
@@ -152,7 +152,7 @@ def main():
              margin: 0 auto 4rem auto;
         }
         .section-header p {
-            color: #a1a1a1;
+            color: #a1a1a1; /* REVERTED */
             font-size: 1.2rem;
         }
 
@@ -187,6 +187,12 @@ def main():
         .engagement-card .status-at-risk { color: #ff4b4b; }
         .engagement-card .status-on-track { color: #3dd56d; }
         .engagement-card .status-awaiting { color: #f0b429; }
+        
+        .footer-text {
+            text-align: center;
+            color: #a1a1a1; 
+            padding: 2rem 0;
+        }
 
     </style>
     """, unsafe_allow_html=True)
@@ -335,7 +341,7 @@ def main():
 
     # --- FOOTER ---
     st.markdown("---", unsafe_allow_html=True)
-    st.markdown("<div style='text-align: center; color: #a1a1a1; padding: 2rem 0;'><p>© 2025 MemoGenie. The Single Source of Truth for Enterprise.</p></div>", unsafe_allow_html=True)
+    st.markdown("<div class='footer-text'><p>© 2025 MemoGenie. The Single Source of Truth for Enterprise.</p></div>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
