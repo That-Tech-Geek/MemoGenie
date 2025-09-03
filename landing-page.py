@@ -97,14 +97,14 @@ def main():
             text-decoration: none;
         }
         .nav-links a {
-            color: #a1a1a1; /* REVERTED */
+            color: #a1a1a1;
             text-decoration: none;
             margin-left: 2rem;
             font-weight: 600;
             transition: color 0.3s;
         }
         .nav-links a:hover {
-            color: #ffffff; /* REVERTED hover state */
+            color: #ffffff;
         }
         .nav-cta {
             background-color: #ffffff;
@@ -153,7 +153,7 @@ def main():
              margin: 0 auto 4rem auto;
         }
         .section-header p {
-            color: #a1a1a1; /* REVERTED */
+            color: #a1a1a1;
             font-size: 1.2rem;
         }
 
@@ -166,28 +166,69 @@ def main():
             border-bottom: 1px solid #2a2a2a;
         }
         
-        /* Cadence Mockup Styles */
-        .cadence-mockup {
-            background-color: #0a0a0a;
-            border: 1px solid #2a2a2a;
+        /* --- Cadence UI Container --- */
+        .cadence-container {
+            background-color: #ffffff;
             border-radius: 12px;
             padding: 1.5rem;
             font-family: 'Inter', sans-serif;
-            color: #ffffff;
+            color: #000000;
         }
-        .engagement-card {
-            background-color: #181818;
+        
+        .cadence-container h5, .cadence-container strong {
+             color: #000000;
+        }
+        .cadence-container hr {
+            border-color: #dddddd;
+        }
+
+        .cadence-container .engagement-card {
+            background-color: #f0f0f0;
             padding: 1rem;
             border-radius: 8px;
-            border: 1px solid #2a2a2a;
+            border: 1px solid #dddddd;
             margin-bottom: 1rem;
+            color: #333333;
         }
-        .engagement-card .status {
+        
+        .cadence-container .engagement-card .status {
             font-weight: 700;
         }
-        .engagement-card .status-at-risk { color: #ff4b4b; }
-        .engagement-card .status-on-track { color: #3dd56d; }
-        .engagement-card .status-awaiting { color: #f0b429; }
+        .cadence-container .engagement-card .status-at-risk { color: #ff4b4b; }
+        .cadence-container .engagement-card .status-on-track { color: #3dd56d; }
+        .cadence-container .engagement-card .status-awaiting { color: #f0b429; }
+        
+        .cadence-container .button-row {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .cadence-container .cadence-button {
+            flex-grow: 1;
+            background-color: #e9ecef;
+            color: #000000;
+            border: 1px solid #ced4da;
+            padding: 0.75rem 1rem;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-align: center;
+        }
+        .cadence-container .cadence-button:hover {
+            background-color: #dee2e6;
+        }
+        .cadence-container .advance-button {
+            background-color: #000000;
+            color: #ffffff;
+            border: 1px solid #000000;
+        }
+        .cadence-container .advance-button:hover {
+            background-color: #333333;
+        }
         
         .footer-text {
             text-align: center;
@@ -269,9 +310,9 @@ def main():
         
         with col2:
             cadence_html = """
-            <div class="cadence-mockup">
+            <div class="cadence-container">
                 <h5><strong>Momentum Score: <span class="status-at-risk">8 Engagements Stalled</span></strong></h5>
-                <hr style="border-color: #2a2a2a;">
+                <hr>
                 
                 <div class="engagement-card">
                     <strong>Jane Doe @ Acme Corp</strong> - Close Seed Investment<br>
@@ -290,19 +331,15 @@ def main():
                     <span class="status status-on-track">✅ MEETING SCHEDULED (TOMORROW)</span><br>
                     <small><strong>Next Step:</strong> AI is generating pre-meeting brief.</small>
                 </div>
+
+                <div class="button-row">
+                    <button class="cadence-button">＋ New Engagement</button>
+                    <button class="cadence-button">My Day</button>
+                    <button class="cadence-button advance-button">🚀 Advance All</button>
+                </div>
             </div>
             """
-            st.components.v1.html(cadence_html, height=350)
-            
-            st.write(" ") # Spacer
-            btn_cols = st.columns(3)
-            with btn_cols[0]:
-                st.button("＋ New Engagement", use_container_width=True, key="new_engagement")
-            with btn_cols[1]:
-                st.button("My Day", use_container_width=True, key="my_day")
-            with btn_cols[2]:
-                st.button("🚀 Advance All", use_container_width=True, key="advance_all")
-
+            st.components.v1.html(cadence_html, height=480)
 
         st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
 
@@ -333,7 +370,7 @@ def main():
         st.markdown("<div id='request-a-demo' class='section'></div>", unsafe_allow_html=True)
         st.markdown("<div class='section-header'><h2>Get Started with MemoGenie</h2><p>Request a personalized demo and discover how our Cognitive Engine and Cadence application can unlock the institutional memory of your enterprise.</p></div>", unsafe_allow_html=True)
         
-        google_form_url = "https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFag5Eezp-bXabptdDhim9qN9Yg/viewform?embedded=true"
+        google_form_url = "https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?embedded=true"
         
         st.components.v1.html(
             f'<iframe src="{google_form_url}" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>',
@@ -346,3 +383,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
