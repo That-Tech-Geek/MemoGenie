@@ -166,70 +166,6 @@ def main():
             border-bottom: 1px solid #2a2a2a;
         }
         
-        /* --- Cadence UI Container --- */
-        .cadence-container {
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 1.5rem;
-            font-family: 'Inter', sans-serif;
-            color: #000000;
-        }
-        
-        .cadence-container h5, .cadence-container strong {
-             color: #000000;
-        }
-        .cadence-container hr {
-            border-color: #dddddd;
-        }
-
-        .cadence-container .engagement-card {
-            background-color: #f0f0f0;
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid #dddddd;
-            margin-bottom: 1rem;
-            color: #333333;
-        }
-        
-        .cadence-container .engagement-card .status {
-            font-weight: 700;
-        }
-        .cadence-container .engagement-card .status-at-risk { color: #d90429; }
-        .cadence-container .engagement-card .status-on-track { color: #008000; }
-        .cadence-container .engagement-card .status-awaiting { color: #ffb703; }
-        
-        .cadence-container .button-row {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .cadence-container .cadence-button {
-            flex-grow: 1;
-            background-color: #e9ecef;
-            color: #000000;
-            border: 1px solid #ced4da;
-            padding: 0.75rem 1rem;
-            font-weight: 700;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            text-align: center;
-        }
-        .cadence-container .cadence-button:hover {
-            background-color: #dee2e6;
-        }
-        .cadence-container .advance-button {
-            background-color: #000000;
-            color: #ffffff;
-            border: 1px solid #000000;
-        }
-        .cadence-container .advance-button:hover {
-            background-color: #333333;
-        }
-        
         .footer-text {
             text-align: center;
             color: #a1a1a1; 
@@ -297,9 +233,8 @@ def main():
         st.markdown("<div id='cadence' class='section'></div>", unsafe_allow_html=True)
         st.markdown("<div class='section-header'><h2>From Insight to Action: Introducing Cadence</h2><p>Cadence is the killer app powered by the MemoGenie engine. It's your calendar's Chief of Staff, using institutional knowledge to automate follow-ups, eliminate scheduling-hell, and ensure no opportunity is ever dropped.</p></div>", unsafe_allow_html=True)
 
-        col1, col2 = st.columns([1,1], gap="large")
-
-        with col1:
+        _, text_col, _ = st.columns([1, 2, 1])
+        with text_col:
             st.subheader("Stop Chasing. Start Closing.")
             st.write("""
             For sales teams, VCs, and recruiters, momentum is everything. Cadence monitors your pipeline of conversations and turns your MemoGenie knowledge graph into action.
@@ -308,39 +243,6 @@ def main():
             - **The "Magic Wand":** The `Advance All` button executes every overdue automated task in one click, clearing your team's plate for high-value work.
             """)
         
-        with col2:
-            cadence_html = """
-            <div class="cadence-container">
-                <h5><strong>Momentum Score: <span class="status-at-risk">8 Engagements Stalled</span></strong></h5>
-                <hr>
-                
-                <div class="engagement-card">
-                    <strong>Jane Doe @ Acme Corp</strong> - Close Seed Investment<br>
-                    <span class="status status-at-risk">🚨 AT RISK (NO CONTACT IN 10 DAYS)</span><br>
-                    <small><strong>Next Step:</strong> AUTOMATED: Follow-up #3 sends in 4 hours.</small>
-                </div>
-
-                <div class="engagement-card">
-                    <strong>John Smith @ Innovate Inc</strong> - Schedule Demo<br>
-                    <span class="status status-awaiting">⏳ AWAITING REPLY (DAY 2)</span><br>
-                    <small><strong>Next Step:</strong> ACTION: Record personalized video about their competitor.</small>
-                </div>
-
-                <div class="engagement-card">
-                    <strong>Sam Wilson @ Future Tech</strong> - Term Sheet Negotiation<br>
-                    <span class="status status-on-track">✅ MEETING SCHEDULED (TOMORROW)</span><br>
-                    <small><strong>Next Step:</strong> AI is generating pre-meeting brief.</small>
-                </div>
-
-                <div class="button-row">
-                    <button class="cadence-button">＋ New Engagement</button>
-                    <button class="cadence-button">My Day</button>
-                    <button class="cadence-button advance-button">🚀 Advance All</button>
-                </div>
-            </div>
-            """
-            st.components.v1.html(cadence_html, height=480)
-
         st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
 
     # --- THE MEMOGENIE ADVANTAGE (ENGINE) ---
@@ -383,4 +285,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
