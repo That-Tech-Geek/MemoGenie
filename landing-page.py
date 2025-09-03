@@ -372,3 +372,4 @@ def main():
     st.markdown("<div class='footer-text'><p>© 2025 MemoGenie. The Single Source of Truth for Enterprise.</p></div>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
+
