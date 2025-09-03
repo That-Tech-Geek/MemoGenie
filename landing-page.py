@@ -171,6 +171,8 @@ def main():
             border: 1px solid #2a2a2a;
             border-radius: 12px;
             padding: 1.5rem;
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
         }
         .engagement-card {
             background-color: #181818;
@@ -259,7 +261,7 @@ def main():
             """)
         
         with col2:
-            st.markdown(f"""
+            cadence_html = """
             <div class="cadence-mockup">
                 <h5><strong>Momentum Score: <span class="status-at-risk">8 Engagements Stalled</span></strong></h5>
                 <hr style="border-color: #2a2a2a;">
@@ -282,7 +284,8 @@ def main():
                     <small><strong>Next Step:</strong> AI is generating pre-meeting brief.</small>
                 </div>
             </div>
-            """, unsafe_allow_html=True)
+            """
+            st.components.v1.html(cadence_html, height=350)
             
             st.write(" ") # Spacer
             btn_cols = st.columns(3)
@@ -336,4 +339,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
