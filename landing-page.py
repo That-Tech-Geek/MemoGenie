@@ -181,6 +181,7 @@ def main():
         }
         .engagement-card .status-at-risk { color: #ff4b4b; }
         .engagement-card .status-on-track { color: #3dd56d; }
+        .engagement-card .status-awaiting { color: #f0b429; }
 
     </style>
     """, unsafe_allow_html=True)
@@ -255,31 +256,52 @@ def main():
             """)
         
         with col2:
-            st.markdown("""
+            # Data for the Cadence mockup
+            engagements = [
+                {
+                    "contact": "Jane Doe @ Acme Corp", "goal": "Close Seed Investment",
+                    "status_text": "AT RISK (NO CONTACT IN 10 DAYS)", "status_class": "status-at-risk", "status_icon": "🚨",
+                    "next_step": "AUTOMATED: Follow-up #3 sends in 4 hours."
+                },
+                {
+                    "contact": "John Smith @ Innovate Inc", "goal": "Schedule Demo",
+                    "status_text": "AWAITING REPLY (DAY 2)", "status_class": "status-awaiting", "status_icon": "⏳",
+                    "next_step": "ACTION: Record personalized video about their competitor."
+                },
+                {
+                    "contact": "Sam Wilson @ Future Tech", "goal": "Term Sheet Negotiation",
+                    "status_text": "MEETING SCHEDULED (TOMORROW)", "status_class": "status-on-track", "status_icon": "✅",
+                    "next_step": "AI is generating pre-meeting brief."
+                }
+            ]
+            
+            engagement_html = ""
+            for eng in engagements:
+                engagement_html += f"""
+                <div class="engagement-card">
+                    <strong>{eng['contact']}</strong> - {eng['goal']}<br>
+                    <span class="status {eng['status_class']}">{eng['status_icon']} {eng['status_text']}</span><br>
+                    <small><strong>Next Step:</strong> {eng['next_step']}</small>
+                </div>
+                """
+            
+            st.markdown(f"""
             <div class="cadence-mockup">
                 <h5><strong>Momentum Score: <span class="status-at-risk">8 Engagements Stalled</span></strong></h5>
                 <hr style="border-color: #2a2a2a;">
-                
-                <div class="engagement-card">
-                    <strong>Jane Doe @ Acme Corp</strong> - Close Seed Investment<br>
-                    <span class="status status-at-risk">AT RISK (NO CONTACT IN 10 DAYS)</span><br>
-                    <small><strong>Next Step:</strong> AUTOMATED: Follow-up #3 sends in 4 hours.</small>
-                </div>
-                
-                <div class="engagement-card">
-                    <strong>John Smith @ Innovate Inc</strong> - Schedule Demo<br>
-                    <span class="status status-on-track">AWAITING REPLY (DAY 2)</span><br>
-                    <small><strong>Next Step:</strong> ACTION: Record personalized video about their competitor.</small>
-                </div>
-
-                <div class="engagement-card">
-                    <strong>Sam Wilson @ Future Tech</strong> - Term Sheet Negotiation<br>
-                    <span class="status status-on-track">MEETING SCHEDULED (TOMORROW)</span><br>
-                    <small><strong>Next Step:</strong> AI is generating pre-meeting brief.</small>
-                </div>
-                
+                {engagement_html}
             </div>
             """, unsafe_allow_html=True)
+            
+            st.write(" ") # Spacer
+            btn_cols = st.columns(3)
+            with btn_cols[0]:
+                st.button("＋ New Engagement", use_container_width=True, key="new_engagement")
+            with btn_cols[1]:
+                st.button("My Day", use_container_width=True, key="my_day")
+            with btn_cols[2]:
+                st.button("🚀 Advance All", use_container_width=True, key="advance_all")
+
 
         st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
 
