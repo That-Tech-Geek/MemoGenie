@@ -2,7 +2,6 @@ import streamlit as st
 import time
 
 # --- MOCK DATA ---
-# This would be your actual backend/API call in a real app
 DEMO_RESPONSES = {
     "What were the key learnings from the Q4 customer feedback on Project Atlas?": {
         "answer": """
@@ -73,9 +72,6 @@ def main():
         }
         
         /* --- Navigation Bar --- */
-        div[data-testid="stToolbar"] {
-            padding-right: 2rem;
-        }
         .nav-container {
             position: fixed;
             top: 0;
@@ -127,30 +123,9 @@ def main():
             background-color: #e5e5e5;
             transform: translateY(-2px);
         }
-
-        /* --- Demo Section --- */
-        .stTextInput input {
-            background-color: #000000 !important;
-            border: 1px solid #2a2a2a;
-        }
-        .stButton>button { /* General button style */
-             border: 1px solid #2a2a2a;
-             background-color: #181818;
-        }
-         .stButton>button:hover {
-             border-color: #ffffff;
-             color: #ffffff;
-         }
-        .ai-response {
-            background-color: #181818;
-            border: 1px solid #2a2a2a;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-top: 1rem;
-        }
-
-        /* Feature Card Styles */
-        .feature-card {
+        
+        /* Feature & UI Card Styles */
+        .card {
             background-color: #181818;
             padding: 2rem;
             border-radius: 12px;
@@ -158,11 +133,11 @@ def main():
             height: 100%;
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
-        .feature-card:hover {
+        .card:hover {
             transform: translateY(-5px);
             border-color: #a1a1a1;
         }
-        .feature-icon {
+        .card-icon {
             font-size: 2.5rem;
             margin-bottom: 1rem;
         }
@@ -186,6 +161,26 @@ def main():
         .section-divider {
             border-bottom: 1px solid #2a2a2a;
         }
+        
+        /* Cadence Mockup Styles */
+        .cadence-mockup {
+            background-color: #0a0a0a;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .engagement-card {
+            background-color: #181818;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+            margin-bottom: 1rem;
+        }
+        .engagement-card .status {
+            font-weight: 700;
+        }
+        .engagement-card .status-at-risk { color: #ff4b4b; }
+        .engagement-card .status-on-track { color: #3dd56d; }
 
     </style>
     """, unsafe_allow_html=True)
@@ -196,7 +191,7 @@ def main():
             <a href="#top" class="nav-logo">MemoGenie</a>
             <div class="nav-links">
                 <a href="#how-it-works">How It Works</a>
-                <a href="#demo">Demo</a>
+                <a href="#cadence">Cadence</a>
                 <a href="#the-engine">The Engine</a>
                 <a href="#request-a-demo" class="nav-cta">Request a Demo</a>
             </div>
@@ -218,8 +213,6 @@ def main():
         st.write(" ")
         st.write(" ")
         st.markdown("<p style='text-align: center; color: #a1a1a1;'>TRUSTED BY THE WORLD'S MOST INNOVATIVE COMPANIES</p>", unsafe_allow_html=True)
-        
-        # In a real app, these would be logos
         st.markdown("<h3 style='text-align: center; font-weight: 600; color: #555555; letter-spacing: 0.5rem;'>LOGO LOGO LOGO LOGO</h3>", unsafe_allow_html=True)
         st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
 
@@ -237,59 +230,63 @@ def main():
         for i, card in enumerate(cards_data):
             with cols[i]:
                 st.markdown(f"""
-                <div class="feature-card">
-                    <div class="feature-icon">{card['icon']}</div>
+                <div class="card">
+                    <div class="card-icon">{card['icon']}</div>
                     <h3>{card['title']}</h3>
                     <p>{card['text']}</p>
                 </div>
                 """, unsafe_allow_html=True)
         st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
 
-    # --- INTERACTIVE DEMO ---
+    # --- CADENCE SECTION ---
     with st.container():
-        st.markdown("<div id='demo' class='section'></div>", unsafe_allow_html=True)
-        st.markdown("<div class='section-header'><h2>See The Cognitive Engine in Action</h2><p>Ask a question. Our engine won't just find a document—it will connect the dots across your entire organization to give you a strategic answer.</p></div>", unsafe_allow_html=True)
+        st.markdown("<div id='cadence' class='section'></div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'><h2>From Insight to Action: Introducing Cadence</h2><p>Cadence is the killer app powered by the MemoGenie engine. It's your calendar's Chief of Staff, using institutional knowledge to automate follow-ups, eliminate scheduling-hell, and ensure no opportunity is ever dropped.</p></div>", unsafe_allow_html=True)
 
-        if 'user_question' not in st.session_state:
-            st.session_state.user_question = ""
+        col1, col2 = st.columns([1,1], gap="large")
 
-        def set_question(question):
-            st.session_state.user_question = question
+        with col1:
+            st.subheader("Stop Chasing. Start Closing.")
+            st.write("""
+            For sales teams, VCs, and recruiters, momentum is everything. Cadence monitors your pipeline of conversations and turns your MemoGenie knowledge graph into action.
+            - **AI-Powered Playbooks:** It knows your firm's process and suggests the next best action for every engagement.
+            - **Automated Follow-ups:** It sends the right message at the right time, so your team can focus on conversations, not logistics.
+            - **The "Magic Wand":** The `Advance All` button executes every overdue automated task in one click, clearing your team's plate for high-value work.
+            """)
         
-        example_questions = list(DEMO_RESPONSES.keys())
-        cols = st.columns(len(example_questions))
-        for i, question in enumerate(example_questions):
-            with cols[i]:
-                st.button(question, on_click=set_question, args=(question,), use_container_width=True)
+        with col2:
+            st.markdown("""
+            <div class="cadence-mockup">
+                <h5><strong>Momentum Score: <span class="status-at-risk">8 Engagements Stalled</span></strong></h5>
+                <hr style="border-color: #2a2a2a;">
+                
+                <div class="engagement-card">
+                    <strong>Jane Doe @ Acme Corp</strong> - Close Seed Investment<br>
+                    <span class="status status-at-risk">AT RISK (NO CONTACT IN 10 DAYS)</span><br>
+                    <small><strong>Next Step:</strong> AUTOMATED: Follow-up #3 sends in 4 hours.</small>
+                </div>
+                
+                <div class="engagement-card">
+                    <strong>John Smith @ Innovate Inc</strong> - Schedule Demo<br>
+                    <span class="status status-on-track">AWAITING REPLY (DAY 2)</span><br>
+                    <small><strong>Next Step:</strong> ACTION: Record personalized video about their competitor.</small>
+                </div>
 
-        user_question_input = st.text_input("Ask about a project, a decision, or a customer...", value=st.session_state.user_question, key="text_input", label_visibility="collapsed")
-        
-        if user_question_input:
-            with st.spinner("Analyzing connections across documents, transcripts, and messages..."):
-                time.sleep(1.5)
-            
-            response = DEMO_RESPONSES.get(user_question_input, 
-                {
-                    "answer": "This is a great question. While I don't have a pre-canned answer, a live demo would show how MemoGenie connects the dots to provide a real-time, synthesized response from your data.",
-                    "recommendation": "Request a personalized demo to see this in action on your own organization's data.",
-                    "sources": ["[Internal Memo Q1.docx]", "[Project Planning.vsdx]"]
-                }
-            )
-            
-            st.markdown(f"""
-            <div class="ai-response">
-                <h4>Synthesized Answer:</h4>
-                <p>{response['answer']}</p>
-                <p><strong>Recommendation:</strong> {response['recommendation']}</p>
-                <small>SOURCES: {' '.join(response['sources'])}</small>
+                <div class="engagement-card">
+                    <strong>Sam Wilson @ Future Tech</strong> - Term Sheet Negotiation<br>
+                    <span class="status status-on-track">MEETING SCHEDULED (TOMORROW)</span><br>
+                    <small><strong>Next Step:</strong> AI is generating pre-meeting brief.</small>
+                </div>
+                
             </div>
             """, unsafe_allow_html=True)
+
         st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
 
-    # --- THE MEMOGENIE ADVANTAGE ---
+    # --- THE MEMOGENIE ADVANTAGE (ENGINE) ---
     with st.container():
         st.markdown("<div id='the-engine' class='section'></div>", unsafe_allow_html=True)
-        st.markdown("<div class='section-header'><h2>From Retrieval to Reasoning.</h2><p>Retrieval-Augmented Generation (RAG) is a commodity. It finds documents. Our Cognitive Engine connects disparate data points to generate novel, strategic insights your team would otherwise miss.</p></div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'><h2>From Retrieval to Reasoning.</h2><p>This isn't just another RAG pipeline. Our Cognitive Engine connects disparate data points to generate novel, strategic insights your team would otherwise miss.</p></div>", unsafe_allow_html=True)
 
         cols = st.columns(3, gap="large")
         cards_data = [
@@ -300,8 +297,8 @@ def main():
         for i, card in enumerate(cards_data):
             with cols[i]:
                 st.markdown(f"""
-                <div class="feature-card">
-                    <div class="feature-icon">{card['icon']}</div>
+                <div class="card">
+                    <div class="card-icon">{card['icon']}</div>
                     <h3>{card['title']}</h3>
                     <p>{card['text']}</p>
                 </div>
@@ -311,7 +308,7 @@ def main():
     # --- GOOGLE FORM EMBED ---
     with st.container():
         st.markdown("<div id='request-a-demo' class='section'></div>", unsafe_allow_html=True)
-        st.markdown("<div class='section-header'><h2>Get Started with MemoGenie</h2><p>Request a personalized demo and discover how our Cognitive Engine can unlock the institutional memory of your enterprise.</p></div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'><h2>Get Started with MemoGenie</h2><p>Request a personalized demo and discover how our Cognitive Engine and Cadence application can unlock the institutional memory of your enterprise.</p></div>", unsafe_allow_html=True)
         
         google_form_url = "https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?embedded=true"
         
