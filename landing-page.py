@@ -2,32 +2,33 @@ import streamlit as st
 import time
 
 # --- MOCK DATA ---
+# Refactored to use triple-quoted f-strings for robust multi-line HTML
 DEMO_RESPONSES = {
     "What were the key learnings from the Q4 customer feedback on Project Atlas?": {
-        "answer": (
-            "The key learning from Q4 feedback on <strong>Project Atlas</strong> was a strong dichotomy:"
-            "<ul>"
-            "<li>Users loved the new UI, praised for its speed and intuitiveness (praised by <strong>Alice</strong> in the product sync on Nov 12th).</li>"
-            "<li>However, the data export feature was a critical failure point for power users, representing a significant churn risk.</li>"
-            "</ul>"
-            "This export issue was first flagged by <strong>Bob</strong> from Sales after a call with a major client and is linked to the "
-            "same API limitation that caused delays in the failed <strong>Project Titan</strong> last year."
-        ),
+        "answer": f"""
+            The key learning from Q4 feedback on <strong>Project Atlas</strong> was a strong dichotomy:
+            <ul>
+                <li>Users loved the new UI, praised for its speed and intuitiveness (praised by <strong>Alice</strong> in the product sync on Nov 12th).</li>
+                <li>However, the data export feature was a critical failure point for power users, representing a significant churn risk.</li>
+            </ul>
+            This export issue was first flagged by <strong>Bob</strong> from Sales after a call with a major client and is linked to the 
+            same API limitation that caused delays in the failed <strong>Project Titan</strong> last year.
+        """,
         "recommendation": "Prioritize a fix for the export feature and form a task force to evaluate the core API dependency to avoid repeating past mistakes.",
         "sources": ["[Project Atlas - Q4 Feedback.docx]", "[Nov 12 - Product Sync Transcript]", "[Client Call - Bob.mp3]"]
     },
     "Summarize the competitive landscape for our new 'Genie' feature.": {
-        "answer": (
-            "The competitive landscape for 'Genie' is dominated by three players:"
-            "<ul>"
-            "<li><strong>Competitor A:</strong> Strong in the enterprise market but their product is known to be slow and bloated.</li>"
-            "<li><strong>Competitor B:</strong> A fast-moving startup that recently raised a Series B. Their feature set is limited but they have strong user love.</li>"
-            "<li><strong>Internal Project 'Phoenix':</strong> A now-defunct internal tool from two years ago that attempted a similar goal. "
-            "The post-mortem (authored by <strong>Carol</strong>) cited a lack of data integration as the primary reason for failure.</li>"
-            "</ul>"
-            "MemoGenie's advantage is our ability to integrate deeply with existing tools, "
-            "directly addressing the failure point of our own past attempts."
-        ),
+        "answer": f"""
+            The competitive landscape for 'Genie' is dominated by three players:
+            <ul>
+                <li><strong>Competitor A:</strong> Strong in the enterprise market but their product is known to be slow and bloated.</li>
+                <li><strong>Competitor B:</strong> A fast-moving startup that recently raised a Series B. Their feature set is limited but they have strong user love.</li>
+                <li><strong>Internal Project 'Phoenix':</strong> A now-defunct internal tool from two years ago that attempted a similar goal. 
+                The post-mortem (authored by <strong>Carol</strong>) cited a lack of data integration as the primary reason for failure.</li>
+            </ul>
+            MemoGenie's advantage is our ability to integrate deeply with existing tools, 
+            directly addressing the failure point of our own past attempts.
+        """,
         "recommendation": "Focus marketing on the speed and seamless integration of MemoGenie compared to Competitor A, and highlight our broader feature set than Competitor B.",
         "sources": ["[Market Analysis Q3.pptx]", "[Competitor B - Series B Press Release]", "[Project Phoenix Post-Mortem.pdf]"]
     }
@@ -332,7 +333,7 @@ def main():
         st.markdown("<div id='request-a-demo' class='section'></div>", unsafe_allow_html=True)
         st.markdown("<div class='section-header'><h2>Get Started with MemoGenie</h2><p>Request a personalized demo and discover how our Cognitive Engine and Cadence application can unlock the institutional memory of your enterprise.</p></div>", unsafe_allow_html=True)
         
-        google_form_url = "https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFfag5Eezp-bXabptdDhim9qN9Yg/viewform?embedded=true"
+        google_form_url = "https://docs.google.com/forms/d/e/1FAIpQLSeXMbAaHSCNuMt-AKI1kCpFag5Eezp-bXabptdDhim9qN9Yg/viewform?embedded=true"
         
         st.components.v1.html(
             f'<iframe src="{google_form_url}" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>',
