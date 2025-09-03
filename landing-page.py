@@ -166,70 +166,6 @@ def main():
             border-bottom: 1px solid #2a2a2a;
         }
         
-        /* --- Cadence UI Container --- */
-        .cadence-container {
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 1.5rem;
-            font-family: 'Inter', sans-serif;
-            color: #000000;
-        }
-        
-        .cadence-container h5, .cadence-container strong {
-             color: #000000;
-        }
-        .cadence-container hr {
-            border-color: #dddddd;
-        }
-
-        .cadence-container .engagement-card {
-            background-color: #f0f0f0;
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid #dddddd;
-            margin-bottom: 1rem;
-            color: #333333;
-        }
-        
-        .cadence-container .engagement-card .status {
-            font-weight: 700;
-        }
-        .cadence-container .engagement-card .status-at-risk { color: #ff4b4b; }
-        .cadence-container .engagement-card .status-on-track { color: #3dd56d; }
-        .cadence-container .engagement-card .status-awaiting { color: #f0b429; }
-        
-        .cadence-container .button-row {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .cadence-container .cadence-button {
-            flex-grow: 1;
-            background-color: #e9ecef;
-            color: #000000;
-            border: 1px solid #ced4da;
-            padding: 0.75rem 1rem;
-            font-weight: 700;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            text-align: center;
-        }
-        .cadence-container .cadence-button:hover {
-            background-color: #dee2e6;
-        }
-        .cadence-container .advance-button {
-            background-color: #000000;
-            color: #ffffff;
-            border: 1px solid #000000;
-        }
-        .cadence-container .advance-button:hover {
-            background-color: #333333;
-        }
-        
         .footer-text {
             text-align: center;
             color: #a1a1a1; 
@@ -310,6 +246,60 @@ def main():
         
         with col2:
             cadence_html = """
+            <style>
+                .cadence-container {
+                    background-color: #ffffff;
+                    border-radius: 12px;
+                    padding: 1.5rem;
+                    font-family: 'Inter', sans-serif;
+                    color: #000000;
+                }
+                .cadence-container h5, .cadence-container strong {
+                    color: #000000;
+                }
+                .cadence-container hr {
+                    border-color: #dddddd;
+                }
+                .cadence-container .engagement-card {
+                    background-color: #f0f0f0;
+                    padding: 1rem;
+                    border-radius: 8px;
+                    border: 1px solid #dddddd;
+                    margin-bottom: 1rem;
+                    color: #333333;
+                }
+                .cadence-container .engagement-card .status { font-weight: 700; }
+                .cadence-container .engagement-card .status-at-risk { color: #d90429; }
+                .cadence-container .engagement-card .status-on-track { color: #00b4d8; }
+                .cadence-container .engagement-card .status-awaiting { color: #fca311; }
+                
+                .cadence-container .button-row {
+                    display: flex;
+                    gap: 1rem;
+                    margin-top: 1.5rem;
+                }
+                .cadence-container .cadence-button {
+                    flex-grow: 1;
+                    background-color: #e9ecef;
+                    color: #000000;
+                    border: 1px solid #ced4da;
+                    padding: 0.75rem 1rem;
+                    font-weight: 700;
+                    font-family: 'Inter', sans-serif;
+                    font-size: 0.9rem;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: background-color 0.2s;
+                    text-align: center;
+                }
+                .cadence-container .cadence-button:hover { background-color: #dee2e6; }
+                .cadence-container .advance-button {
+                    background-color: #000000;
+                    color: #ffffff;
+                    border: 1px solid #000000;
+                }
+                .cadence-container .advance-button:hover { background-color: #333333; }
+            </style>
             <div class="cadence-container">
                 <h5><strong>Momentum Score: <span class="status-at-risk">8 Engagements Stalled</span></strong></h5>
                 <hr>
@@ -382,5 +372,3 @@ def main():
     st.markdown("<div class='footer-text'><p>© 2025 MemoGenie. The Single Source of Truth for Enterprise.</p></div>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
-    main()
-
